@@ -4,7 +4,6 @@ package it.unibo.collektive.alchemist.device.sensors
  * Interface representing a sensor capable of tracking and managing resource values for a node.
  */
 interface ResourceSensor {
-
     /**
      * The lower bound threshold for the resource.
      */

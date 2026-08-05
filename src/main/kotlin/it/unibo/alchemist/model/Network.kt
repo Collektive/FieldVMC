@@ -32,5 +32,4 @@ interface Network<T> {
      * Returns true whether the [Network] contains at least one of the [nodes] passed as input.
      */
     fun containsAtLeastOneOf(nodes: Set<Node<T>>): Boolean = nodes.any { it in this }
-
 }

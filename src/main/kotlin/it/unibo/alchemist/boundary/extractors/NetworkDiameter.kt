@@ -21,6 +21,5 @@ class NetworkDiameter : Extractor<Double> {
         reaction: Actionable<T>?,
         time: Time,
         step: Long,
-    ): Map<String, Double> =
-        mapOf(NAME to environment.networkDiameterByHopDistance())
+    ): Map<String, Double> = mapOf(NAME to environment.networkDiameterByHopDistance())
 }

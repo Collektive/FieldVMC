@@ -17,7 +17,7 @@ class MetricsStableForSteps<T>(
     private val stepInterval: Long,
     private val equalInterval: Long,
     private val metricsToCheck: (Environment<T, Position<*>>) -> Map<String, T>,
-): TerminationPredicate<T, Position<*>> {
+) : TerminationPredicate<T, Position<*>> {
     private var stepsChecked: Long = 0
     private var equalSuccess: Long = 0
     private var lastUpdatedMetrics: Map<String, T> = emptyMap()

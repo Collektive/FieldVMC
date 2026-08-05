@@ -27,7 +27,7 @@ import kotlin.math.absoluteValue
  * @param innerWidth The width of the inner (empty) rectangle.
  * @param innerHeight The height of the inner (empty) rectangle.
  */
-class ConcentricRectangles<P: Position<P>>(
+class ConcentricRectangles<P : Position<P>>(
     environment: Environment<*, P>,
     randomGenerator: RandomGenerator,
     val nodes: Int,
@@ -40,7 +40,6 @@ class ConcentricRectangles<P: Position<P>>(
     innerWidth: Double,
     innerHeight: Double,
 ) : AbstractRandomDeployment<P>(environment, randomGenerator, nodes) {
-
     /**
      * Represents a 2D rectangular area used to partition the deployment space.
      *
@@ -63,11 +62,11 @@ class ConcentricRectangles<P: Position<P>>(
     /**
      * Companion object holding the shared deployment rectangles.
      */
-    companion object{
+    companion object {
         /**
          * List of rectangles representing the available deployment areas.
          */
-        lateinit var rectangles : List<Rectangle>
+        lateinit var rectangles: List<Rectangle>
     }
 
     init {

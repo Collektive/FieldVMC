@@ -1,3 +1,5 @@
+@file:Suppress("UndocumentedPublicFunction")
+
 package it.unibo.collektive.coordination
 
 import it.unibo.collektive.aggregate.api.Aggregate

@@ -4,7 +4,6 @@ package it.unibo.collektive.alchemist.device.sensors
  * Interface representing a sensor capable of checking and managing the leader status of a node.
  */
 interface LeaderSensor {
-
     /**
      * The radius within which the node acts as a leader.
      */

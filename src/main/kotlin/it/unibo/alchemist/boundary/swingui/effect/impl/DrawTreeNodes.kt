@@ -177,7 +177,7 @@ class DrawTreeNodes : AbstractTreeEffect() {
         private const val BOUNDING_BOX_DIVISOR = 2
         private const val HALF = 2
 
-        private operator fun Point.times(factor: Int): Point = Point((x * factor), (y * factor))
+        // private operator fun Point.times(factor: Int): Point = Point((x * factor), (y * factor))
 
         private operator fun Point.div(factor: Int): Point = Point((x / factor), (y / factor))
 
