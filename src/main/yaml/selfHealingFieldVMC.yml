@@ -14,24 +14,10 @@ variables:
   #OPTIMIZED PARAMETERS
   maxResource: &maxResource
      269.268977333149
-  #   301.4681878330597
-  #   262.0612312825236
-  #   270.3008703178914
-  #   272.4515051831913
-  #   267.8281934253056
   maxSuccess: &maxSuccess
     344.1067281260815
-  #   364.982328606231
-  #   358.2929409407814
-  #   340.35865515556816
-  #   323.396898398807
-  #   401.3085404073488
   resourceLowerBound: &resourceLowerBound
     4.362890520000837
-  #   4.239466590881137
-  #   4.3851768440706
-  #   4.458599742599371
-  #   4.181794181383088
   origin: &origin
     type: LinearVariable
     parameters: [ 10.0, 0.1, 50.0, 3.0 ]
@@ -101,40 +87,40 @@ deployments:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.DeviceSpawner
         parameters: [ *cloningRange, *maxChildren ]
 
-export:
-  - type: CSVExporter
-    parameters:
-      fileNameRoot: *fileName
-      interval: 1.0
-      exportPath: *path
-    data:
-      - time
-      - type: NumberOfNodes
-      - type: NetworkHub
-      - type: NumberOfLeaves
-      - type: NetworkDensity
-      - type: NetworkDiameter
-      - type: NodeDegree
-        parameters:
-          filter: onlyfinite
-          aggregators: [ max, mean, variance, median, StandardDeviation ]
-      - molecule: children-count
-        aggregators: [ max, mean, variance, median, StandardDeviation ]
-        value-filter: onlyfinite
-        precision: 3
-      - molecule: local-success
-        aggregators: [ max, mean, variance, median, StandardDeviation ]
-        value-filter: onlyfinite
-        precision: 3
-      - molecule: resource
-        aggregators: [ max, mean, variance, median, StandardDeviation ]
-        value-filter: onlyfinite
-        precision: 3
-      - molecule: success
-        aggregators: [ max, mean, variance, median, StandardDeviation ]
-        value-filter: onlyfinite
-        precision: 3
-      - molecule: local-resource
-        aggregators: [ max, mean, variance, median, StandardDeviation ]
-        value-filter: onlyfinite
-        precision: 3
+#export:
+#  - type: CSVExporter
+#    parameters:
+#      fileNameRoot: *fileName
+#      interval: 1.0
+#      exportPath: *path
+#    data:
+#      - time
+#      - type: NumberOfNodes
+#      - type: NetworkHub
+#      - type: NumberOfLeaves
+#      - type: NetworkDensity
+#      - type: NetworkDiameter
+#      - type: NodeDegree
+#        parameters:
+#          filter: onlyfinite
+#          aggregators: [ max, mean, variance, median, StandardDeviation ]
+#      - molecule: children-count
+#        aggregators: [ max, mean, variance, median, StandardDeviation ]
+#        value-filter: onlyfinite
+#        precision: 3
+#      - molecule: local-success
+#        aggregators: [ max, mean, variance, median, StandardDeviation ]
+#        value-filter: onlyfinite
+#        precision: 3
+#      - molecule: resource
+#        aggregators: [ max, mean, variance, median, StandardDeviation ]
+#        value-filter: onlyfinite
+#        precision: 3
+#      - molecule: success
+#        aggregators: [ max, mean, variance, median, StandardDeviation ]
+#        value-filter: onlyfinite
+#        precision: 3
+#      - molecule: local-resource
+#        aggregators: [ max, mean, variance, median, StandardDeviation ]
+#        value-filter: onlyfinite
+#        precision: 3

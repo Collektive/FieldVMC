@@ -103,43 +103,43 @@ deployments:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
         parameters: [ *resourceLowerBound, *maxResource ]
 
-export:
-  - type: CSVExporter
-    parameters:
-      fileNameRoot: *fileName
-      interval: 1.0
-      exportPath: *path
-    data:
-      - time
-      - type: NumberOfNodes
-      - type: NetworkHub
-      - type: NumberOfLeaves
-      - type: NetworkDensity
-      - type: SubnetworksDiameter
-        parameters:
-          filter: onlyfinite
-          aggregators: [ min, max, mean, variance, median, StandardDeviation ]
-          precision: 3
-      - type: NodeDegree
-        parameters:
-          filter: onlyfinite
-          aggregators: [ max, mean, variance, median, StandardDeviation ]
-      - molecule: local-success
-        aggregators: [ max, mean, variance, median, StandardDeviation ]
-        value-filter: onlyfinite
-        precision: 3
-      - molecule: resource
-        aggregators: [ max, mean, variance, median, StandardDeviation ]
-        value-filter: onlyfinite
-        precision: 3
-      - molecule: success
-        aggregators: [ max, mean, variance, median, StandardDeviation ]
-        value-filter: onlyfinite
-        precision: 3
-      - molecule: local-resource
-        aggregators: [ max, mean, variance, median, StandardDeviation ]
-        value-filter: onlyfinite
-        precision: 3
-      - molecule: leader
-        aggregators: [ Sum ]
-        property: if(it) 1 else 0
+#export:
+#  - type: CSVExporter
+#    parameters:
+#      fileNameRoot: *fileName
+#      interval: 1.0
+#      exportPath: *path
+#    data:
+#      - time
+#      - type: NumberOfNodes
+#      - type: NetworkHub
+#      - type: NumberOfLeaves
+#      - type: NetworkDensity
+#      - type: SubnetworksDiameter
+#        parameters:
+#          filter: onlyfinite
+#          aggregators: [ min, max, mean, variance, median, StandardDeviation ]
+#          precision: 3
+#      - type: NodeDegree
+#        parameters:
+#          filter: onlyfinite
+#          aggregators: [ max, mean, variance, median, StandardDeviation ]
+#      - molecule: local-success
+#        aggregators: [ max, mean, variance, median, StandardDeviation ]
+#        value-filter: onlyfinite
+#        precision: 3
+#      - molecule: resource
+#        aggregators: [ max, mean, variance, median, StandardDeviation ]
+#        value-filter: onlyfinite
+#        precision: 3
+#      - molecule: success
+#        aggregators: [ max, mean, variance, median, StandardDeviation ]
+#        value-filter: onlyfinite
+#        precision: 3
+#      - molecule: local-resource
+#        aggregators: [ max, mean, variance, median, StandardDeviation ]
+#        value-filter: onlyfinite
+#        precision: 3
+#      - molecule: leader
+#        aggregators: [ Sum ]
+#        property: if(it) 1 else 0

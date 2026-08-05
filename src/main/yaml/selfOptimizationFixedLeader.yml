@@ -76,19 +76,19 @@ deployments:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.DeviceSpawner
         parameters: [ *cloningRange, *maxChildren ]
 
-export:
-  - type: CSVExporter
-    parameters:
-      fileNameRoot: *fileName
-      interval: 1.0
-      exportPath: *path
-    data:
-      - time
-      - type: NumberOfNodes
-      - type: NetworkDensity
-      - molecule: MessageSize
-        aggregators: [ max, mean, variance, median, StandardDeviation ]
-        value-filter: onlyfinite
-        precision: 3
-      - molecule: MessageSize
-        aggregators: [ Sum ]
+#export:
+#  - type: CSVExporter
+#    parameters:
+#      fileNameRoot: *fileName
+#      interval: 1.0
+#      exportPath: *path
+#    data:
+#      - time
+#      - type: NumberOfNodes
+#      - type: NetworkDensity
+#      - molecule: MessageSize
+#        aggregators: [ max, mean, variance, median, StandardDeviation ]
+#        value-filter: onlyfinite
+#        precision: 3
+#      - molecule: MessageSize
+#        aggregators: [ Sum ]
