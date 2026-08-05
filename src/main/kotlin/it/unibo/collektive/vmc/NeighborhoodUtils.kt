@@ -4,6 +4,7 @@ package it.unibo.collektive.vmc
 
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.aggregate.api.neighboring
+import it.unibo.collektive.aggregate.values
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.alchemist.device.sensors.LocationSensor
 import it.unibo.collektive.model.Position
@@ -24,10 +25,11 @@ inline fun <reified ID : Comparable<ID>> Aggregate<ID>.extractNeighborhoodPositi
     val children = neighboring(findParent(potential))
     val childrenCount = children.neighbors.countMatching { it.value == localId }
     environmentVariables["parent"] = children.local.value
+    val positions = neighboring(locationSensor.coordinates())
     return LocalInfo(
         childrenCount = childrenCount,
-        localPosition = locationSensor.coordinates(),
-        neighborPositions = locationSensor.surroundings(),
+        localPosition = positions.local.value,
+        neighborPositions = positions.neighbors.values.list,
     )
 }
 

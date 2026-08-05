@@ -27,9 +27,4 @@ class LocationSensorProperty<T : Any, P : Position<P>>(
         val position = environment.getPosition(node).coordinates
         return CollektivePosition(position[0], position[1])
     }
-
-    override fun surroundings(): List<CollektivePosition> =
-        environment.getNeighborhood(node).map { node ->
-            environment.getPosition(node).coordinates.let { CollektivePosition(it[0], it[1]) }
-        }
 }
