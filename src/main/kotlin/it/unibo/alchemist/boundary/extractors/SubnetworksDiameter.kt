@@ -28,7 +28,7 @@ constructor(
                 is Number -> parent.toInt()
                 is String -> parent.toInt()
                 is Unit -> Double.NaN.toInt()
-                else -> error("Parent type not yet supported, found ${parent!!::class}")
+                else -> error("Parent type not yet supported, found ${parent?.let { it::class } ?: "null"}")
             }
     }
 

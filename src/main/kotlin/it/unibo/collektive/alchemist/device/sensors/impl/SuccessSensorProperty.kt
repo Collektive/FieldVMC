@@ -43,5 +43,5 @@ class SuccessSensorProperty<T, P : Position<P>>(
                 ?: IllegalStateException("Layer $name not found")
         ) as T
 
-    override fun toString(): String = this::class.simpleName!!
+    override fun toString(): String = this::class.simpleName ?: javaClass.name
 }
