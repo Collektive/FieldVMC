@@ -2,19 +2,15 @@
 
 package it.unibo.alchemist.boundary.swingui.effect.impl
 
-import it.unibo.alchemist.boundary.swingui.effect.api.Effect
 import it.unibo.alchemist.boundary.ui.api.Wormhole2D
 import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.model.Node
 import it.unibo.alchemist.model.Position2D
-import it.unibo.alchemist.model.Time
-import it.unibo.alchemist.model.molecules.SimpleMolecule
 import java.awt.BasicStroke
 import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.Point
 import kotlin.math.abs
-import kotlin.math.max
 import kotlin.math.nextUp
 
 /**
@@ -24,42 +20,20 @@ import kotlin.math.nextUp
  * based on their local success and resource concentrations. Leaders are highlighted
  * with special concentric arcs.
  */
-class DrawTreeNodes : Effect {
-    override fun getColorSummary(): Color = Color.BLACK
-
-    /**
-     * The timestamp of the last update, used to prevent redundant iteration over nodes.
-     */
-    @Transient
-    var lastUpdated = Time.NEGATIVE_INFINITY
-
-    /**
-     * The maximum local success value found among all nodes.
-     */
-    @Transient
-    var maxSuccess = 0.0
-
-    /**
-     * The maximum resource value found among all nodes.
-     */
-    @Transient
-    var maxResource = 0.0
-
-    override fun <T : Any?, P : Position2D<P>> apply(
+class DrawTreeNodes : AbstractTreeEffect() {
+    override fun <T : Any?, P : Position2D<P>> draw(
         g: Graphics2D,
         node: Node<T>,
         environment: Environment<T, P>,
         wormhole: Wormhole2D<P>,
     ) {
-        updateMaxValues(environment)
-
         runCatching {
             environment.getPosition(node)
         }.onSuccess { nodePosition ->
             val viewPoint = wormhole.getViewPoint(nodePosition)
-            val localResource = node.getConcentration(resource).toDouble()
-            val localSuccess = node.getConcentration(localSuccess).toDouble()
-            val isLeader = node.getConcentration(leader) == true
+            val localResource = node.getConcentration(treeResource).toTreeDouble()
+            val localSuccess = node.getConcentration(treeSuccess).toTreeDouble()
+            val isLeader = node.getConcentration(treeLeader) == true
 
             val size = calculateNodeSize(localResource, localSuccess)
             val sizeInScreenCoordinates = calculateScreenSize(size, nodePosition, environment, wormhole, viewPoint)
@@ -85,18 +59,6 @@ class DrawTreeNodes : Effect {
             if (boundingBox.any { wormhole.isInsideView(it) }) {
                 drawNodeBody(g, viewPoint, sizeInScreenCoordinates, localResource, localSuccess, size.toFloat())
             }
-        }
-    }
-
-    private fun <T : Any?, P : Position2D<P>> updateMaxValues(environment: Environment<T, P>) {
-        if (environment.simulation.time != lastUpdated) {
-            maxSuccess = 0.0
-            maxResource = 0.0
-            for (currentNode in environment.nodes) {
-                maxSuccess = max(maxSuccess, currentNode.getConcentration(localSuccess).toDouble())
-                maxResource = max(maxResource, currentNode.getConcentration(resource).toDouble())
-            }
-            lastUpdated = environment.simulation.time
         }
     }
 
@@ -135,7 +97,7 @@ class DrawTreeNodes : Effect {
             BasicStroke(
                 LEADER_STROKE_SCALE * sizeInScreenCoordinates.x.toFloat(),
                 BasicStroke.CAP_ROUND,
-                BasicStroke.CAP_BUTT
+                BasicStroke.CAP_BUTT,
             )
 
         listOf(
@@ -193,26 +155,6 @@ class DrawTreeNodes : Effect {
      */
     companion object {
         /**
-         * Molecule used to identify the parent of a node.
-         */
-        val myParent = SimpleMolecule("parent")
-
-        /**
-         * Molecule representing the local success of a node.
-         */
-        val localSuccess = SimpleMolecule("success")
-
-        /**
-         * Molecule representing the local resource of a node.
-         */
-        val resource = SimpleMolecule("resource")
-
-        /**
-         * Molecule indicating if a node is a leader.
-         */
-        val leader = SimpleMolecule("leader")
-
-        /**
          * The minimum visual size of a node on the screen.
          */
         const val minNodeSize = 10
@@ -234,29 +176,6 @@ class DrawTreeNodes : Effect {
         private const val HSB_BRIGHTNESS_OFFSET = 0.5f
         private const val BOUNDING_BOX_DIVISOR = 2
         private const val HALF = 2
-
-        private fun Any?.toInt(): Int? =
-            when (this) {
-                is Int -> this
-                is Number -> this.toInt()
-                is String -> this.toInt()
-                null -> null
-                Unit -> null
-                else -> error("Unexpected integer: $this")
-            }
-
-        private fun Any?.toDouble(): Double =
-            when (this) {
-                is Double -> this
-                is Number -> this.toDouble()
-                null -> 0.0
-                Unit -> 0.0
-                else -> error("Unexpected integer: $this")
-            }
-
-        private operator fun Point.plus(other: Point): Point = Point(x + other.x, y + other.y)
-
-        private operator fun Point.minus(other: Point): Point = Point(x - other.x, y - other.y)
 
         private operator fun Point.times(factor: Int): Point = Point((x * factor), (y * factor))
 

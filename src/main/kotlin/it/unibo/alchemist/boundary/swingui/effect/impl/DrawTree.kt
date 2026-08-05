@@ -2,16 +2,11 @@
 
 package it.unibo.alchemist.boundary.swingui.effect.impl
 
-import it.unibo.alchemist.boundary.swingui.effect.api.Effect
 import it.unibo.alchemist.boundary.swingui.effect.impl.DrawTree.Companion.circlesThrough
-import it.unibo.alchemist.boundary.swingui.effect.impl.DrawTreeNodes.Companion.localSuccess
-import it.unibo.alchemist.boundary.swingui.effect.impl.DrawTreeNodes.Companion.resource
 import it.unibo.alchemist.boundary.ui.api.Wormhole2D
 import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.model.Node
 import it.unibo.alchemist.model.Position2D
-import it.unibo.alchemist.model.Time
-import it.unibo.alchemist.model.molecules.SimpleMolecule
 import org.apache.commons.math3.util.FastMath.pow
 import java.awt.BasicStroke
 import java.awt.Color
@@ -21,7 +16,6 @@ import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.hypot
-import kotlin.math.max
 import kotlin.math.sin
 import kotlin.math.sqrt
 
@@ -31,45 +25,16 @@ import kotlin.math.sqrt
  * It visualizes the hierarchical relationship and maps resources and success values
  * to the thickness and color of the connecting lines.
  */
-class DrawTree : Effect {
-    override fun getColorSummary(): Color = Color.BLACK
-
-    /**
-     * The timestamp of the last update, used to avoid redundant calculations.
-     * */
-    @Transient
-    var lastUpdated = Time.NEGATIVE_INFINITY
-
-    /**
-     * The maximum local success value found in the current environment.
-     */
-    @Transient
-    var maxSuccess = 0.0
-
-    /**
-     * The maximum resource value found in the current environment.
-     */
-    @Transient
-    var maxResource = 0.0
-
-    override fun <T : Any?, P : Position2D<P>> apply(
+class DrawTree : AbstractTreeEffect() {
+    override fun <T : Any?, P : Position2D<P>> draw(
         g: Graphics2D,
         node: Node<T>,
         environment: Environment<T, P>,
         wormhole: Wormhole2D<P>,
     ) {
-        if (environment.simulation.time != lastUpdated) {
-            maxSuccess = 0.0
-            maxResource = 0.0
-            for (currentNode in environment.nodes) {
-                maxSuccess = max(maxSuccess, currentNode.getConcentration(localSuccess).toDouble())
-                maxResource = max(maxResource, currentNode.getConcentration(resource).toDouble())
-            }
-            lastUpdated = environment.simulation.time
-        }
-        val parentId: Int? = node.getConcentration(myParent).toInt()
-        val localResource = node.getConcentration(resource).toDouble()
-        val localSuccess = node.getConcentration(localSuccess).toDouble()
+        val parentId = node.getConcentration(treeParent).toTreeInt()
+        val localResource = node.getConcentration(treeResource).toTreeDouble()
+        val localSuccess = node.getConcentration(treeSuccess).toTreeDouble()
         runCatching {
             environment.getNeighborhood(node)
         }.onSuccess { neighborhood ->
@@ -87,7 +52,7 @@ class DrawTree : Effect {
                             BasicStroke(
                                 lineDistance * (localSuccess / maxSuccess).toFloat(),
                                 BasicStroke.CAP_BUTT,
-                                BasicStroke.JOIN_MITER
+                                BasicStroke.JOIN_MITER,
                             )
                         g.color = SUCCESS_COLOR
 
@@ -113,13 +78,15 @@ class DrawTree : Effect {
                     g.stroke =
                         when {
                             neighbor.id == parentId -> BasicStroke(PARENT_STROKE_WIDTH)
-                            else -> BasicStroke(
-                                NON_PARENT_STROKE_WIDTH,
-                                BasicStroke.CAP_BUTT,
-                                BasicStroke.JOIN_MITER,
-                                DASH_MITER_LIMIT, dashPattern,
-                                DASH_PHASE
-                            )
+                            else ->
+                                BasicStroke(
+                                    NON_PARENT_STROKE_WIDTH,
+                                    BasicStroke.CAP_BUTT,
+                                    BasicStroke.JOIN_MITER,
+                                    DASH_MITER_LIMIT,
+                                    dashPattern,
+                                    DASH_PHASE,
+                                )
                         }
                     g.drawLine(viewPoint.x, viewPoint.y, screenNeighborPosition.x, screenNeighborPosition.y)
                 }
@@ -131,7 +98,6 @@ class DrawTree : Effect {
      * Utility functions and constants for geometric tree rendering.
      */
     companion object {
-
         private const val SHIFT_OFFSET = 0.3
         private const val PARENT_STROKE_WIDTH = 4f
         private const val NON_PARENT_STROKE_WIDTH = 1.5f
@@ -139,11 +105,6 @@ class DrawTree : Effect {
         private const val DASH_PHASE = 0f
         private val SUCCESS_COLOR = Color(234, 109, 0)
         private val RESOURCE_COLOR = Color(85, 170, 0)
-
-        /**
-         * Molecule used to identify the parent of a node.
-         */
-        val myParent = SimpleMolecule("parent")
 
         /**
          * Pattern for dashed lines representing non-parent connections.
@@ -154,29 +115,6 @@ class DrawTree : Effect {
          * Minimum arc distance for rendering.
          */
         const val minArcDistance = 10
-
-        private fun Any?.toInt(): Int? =
-            when (this) {
-                is Int -> this
-                is Number -> this.toInt()
-                is String -> this.toInt()
-                null -> null
-                Unit -> null
-                else -> error("Unexpected integer: $this")
-            }
-
-        private fun Any?.toDouble(): Double =
-            when (this) {
-                is Double -> this
-                is Number -> this.toDouble()
-                null -> 0.0
-                Unit -> 0.0
-                else -> error("Unexpected integer: $this")
-            }
-
-        private operator fun Point.plus(other: Point): Point = Point(x + other.x, y + other.y)
-
-        private operator fun Point.minus(other: Point): Point = Point(x - other.x, y - other.y)
 
         /**
          * Represents a mathematical line defined by a passing point ([x], [y]) and a [slope].
