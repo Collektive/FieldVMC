@@ -507,4 +507,3 @@ if __name__ == '__main__':
         print(f'Log scale: {np.log10(max_message_size_mean)}')
     if max_message_size_sum > 0:
         print(f'Log scale: {np.log10(max_message_size_sum)}')
-

@@ -379,7 +379,7 @@ The docker containers will run the experiments in batch mode to collect the data
     ```
 4. Run the script to process the data and generate the charts (this process may take some time):
     ```bash
-    python charts-generator.py
+    python plotting/charts_generator.py
     ```
 5. The charts will be generated in the `charts` folder.
 6. If you want to regenerate the charts, you can run the script again.
