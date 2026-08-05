@@ -53,6 +53,7 @@ inline fun <reified T, reified ID> Aggregate<ID>.convergeCast(
 /**
  * Spreads the [localResource] to the children of this node, according to the [localSuccess] of each child.
  */
+context(envVar: EnvironmentVariables)
 inline fun <reified ID> Aggregate<ID>.spreadToChildren(
     potential: Double,
     localResource: Double,
@@ -82,9 +83,7 @@ inline fun <reified ID> Aggregate<ID>.spreadToChildren(
         myLocalResources / childrenSuccess.neighbors.fold(1) { a, b ->
             a + if (b.value > 0) 1 else 0
         }
-//        if (potential > 0.0) {
-//            envVar["resource"] = selfConsumption
-//        }
+    if (potential > 0.0) envVar["resource"] = selfConsumption
     val resourcesToSpread = myLocalResources - selfConsumption
     val overallChildrenSuccess =
         childrenSuccess.neighbors.fold(0.0) { accumulator, childSuccess ->
