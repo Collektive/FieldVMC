@@ -1,9 +1,12 @@
+@file:Suppress("UndocumentedPublicFunction")
+
 package it.unibo.collektive.vmc
 
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.aggregate.api.neighboring
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.alchemist.device.sensors.LocationSensor
+import it.unibo.collektive.model.Position
 import it.unibo.collektive.stdlib.accumulation.findParent
 import it.unibo.collektive.stdlib.collapse.countMatching
 
@@ -11,21 +14,31 @@ import it.unibo.collektive.stdlib.collapse.countMatching
  * Updates the environment variables related to the neighborhood and returns the spatial data
  * necessary for spawning and destruction policies.
  */
-fun Aggregate<Int>.extractNeighborhood(
+context(
+    environmentVariables: EnvironmentVariables,
+    locationSensor: LocationSensor,
+)
+inline fun <reified ID : Comparable<ID>> Aggregate<ID>.extractNeighborhoodPositions(
     potential: Double,
-    env: EnvironmentVariables,
-    locationS: LocationSensor
-) = run {
+): LocalInfo {
     val children = neighboring(findParent(potential))
-    env["children-around"] = children
-    env["parent"] = children.local.value
-
     val childrenCount = children.neighbors.countMatching { it.value == localId }
-    env["children-count"] = childrenCount
-
-    val neighbors = neighboring(locationS.coordinates())
-    val localPosition = neighbors.local.value
-    val neighborPositions = locationS.surroundings()
-
-    Triple(childrenCount, localPosition, neighborPositions)
+    environmentVariables["parent"] = children.local.value
+    return LocalInfo(
+        childrenCount = childrenCount,
+        localPosition = locationSensor.coordinates(),
+        neighborPositions = locationSensor.surroundings(),
+    )
 }
+
+/** Spatial information about a device and its neighborhood. */
+data class LocalInfo(
+    /** The number of neighboring devices whose parent is the local device. */
+    val childrenCount: Int,
+
+    /** The position of the local device. */
+    val localPosition: Position,
+
+    /** The positions of the neighboring devices. */
+    val neighborPositions: List<Position>,
+)

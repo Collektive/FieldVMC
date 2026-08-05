@@ -1,15 +1,16 @@
+@file:Suppress("UndocumentedPublicFunction")
+
 package it.unibo.collektive.utils
 
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.alchemist.device.sensors.DeviceSpawn
-import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
-import it.unibo.collektive.alchemist.device.sensors.LocationSensor
 import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import it.unibo.collektive.alchemist.device.sensors.ResourceSensor
+import it.unibo.collektive.model.Position
+import it.unibo.collektive.model.minus
+import it.unibo.collektive.model.plus
 import it.unibo.common.calculateAngle
 import it.unibo.common.findSafeSectors
-import it.unibo.common.minus
-import it.unibo.common.plus
 import java.io.Serializable
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -24,9 +25,7 @@ import kotlin.math.sin
  * - [success] the global success of the node;
  * - [localResource] the local resources of the node.
  */
-typealias Spawner = Aggregate<Int>.(
-    devSpawn: DeviceSpawn,
-    locationSensor: LocationSensor,
+typealias Spawner<ID> = Aggregate<ID>.(
     potential: Double,
     localSuccess: Double,
     success: Double,
@@ -67,38 +66,37 @@ data class Stability(
  * The node is destroyed if the local resources are below the lower bound,
  * if it is not father of any node and the neighborhood is stable.
  */
-fun Aggregate<Int>.determineStability(
+context(
+    random: RandomGenerator,
+    resourceSensor: ResourceSensor,
+    devSpawn: DeviceSpawn,
+)
+fun determineStability(
     childrenCount: Int,
     localResource: Double,
     lastChanged: Double,
     now: Double,
     potential: Double,
-    localPosition: Pair<Double, Double>,
-    neighborPositions: List<Pair<Double, Double>>,
+    localPosition: Position,
+    neighborPositions: List<Position>,
     localStability: Stability,
-    devSpawn: DeviceSpawn,
-    env: EnvironmentVariables,
-    random: RandomGenerator,
-    resourceS: ResourceSensor,
-    safeSpaceChecker: (Pair<Double, Double>) -> Double,
+    safeSpaceChecker: (Position) -> Double,
 ): Stability {
     val enoughTime = now > lastChanged + devSpawn.minSpawnWait
     val everyoneIsDestroyStable = now > lastChanged
     val everyoneIsStable = localStability.spawnStable && localStability.destroyStable && enoughTime
 
-    env["enough-time"] = enoughTime
-    env["everyone-is-stable"] = everyoneIsStable
-    env["everyone-is-destroy-stable"] = everyoneIsDestroyStable
-
-    val shouldDestroy = potential > 0.0 &&
+    val shouldDestroy =
+        potential > 0.0 &&
             childrenCount == 0 &&
-            localResource < resourceS.resourceLowerBound &&
+            localResource < resourceSensor.resourceLowerBound &&
             everyoneIsDestroyStable
 
-    val shouldSpawn = neighborPositions.isEmpty() ||
-            (localResource / (2 + childrenCount) > resourceS.resourceLowerBound &&
-                    childrenCount < devSpawn.maxChildren &&
-                    everyoneIsStable)
+    val shouldSpawn =
+        neighborPositions.isEmpty() ||
+            (localResource / (2 + childrenCount) > resourceSensor.resourceLowerBound &&
+                childrenCount < devSpawn.maxChildren &&
+                everyoneIsStable)
 
     return when {
         shouldDestroy -> {
@@ -106,32 +104,33 @@ fun Aggregate<Int>.determineStability(
             Stability(spawnStable = false, destroyStable = false)
         }
         shouldSpawn -> executeSpawnLogic(
-            devSpawn,
             localPosition,
             neighborPositions,
-            random,
             localStability,
-            safeSpaceChecker
+            safeSpaceChecker,
         )
+
         else -> Stability(spawnStable = enoughTime, destroyStable = everyoneIsDestroyStable)
     }
 }
 
-private fun Aggregate<Int>.executeSpawnLogic(
-    devSpawn: DeviceSpawn,
-    localPosition: Pair<Double, Double>,
-    neighborPositions: List<Pair<Double, Double>>,
+context(
     random: RandomGenerator,
+    devSpawn: DeviceSpawn,
+)
+private fun executeSpawnLogic(
+    localPosition: Position,
+    neighborPositions: List<Position>,
     localStability: Stability,
-    safeSpaceChecker: (Pair<Double, Double>) -> Double
+    safeSpaceChecker: (Position) -> Double,
 ): Stability {
     val safeSectors = findSafeSectors(devSpawn.cloningRange) { angle ->
         val x = devSpawn.cloningRange * cos(angle)
         val y = devSpawn.cloningRange * sin(angle)
-        safeSpaceChecker(localPosition + (x to y))
+        safeSpaceChecker(localPosition + Position(x, y))
     }
     val relativePositions = neighborPositions.map { it - localPosition }
-    val angles = relativePositions.map { atan2(it.second, it.first) }.sorted()
+    val angles = relativePositions.map { atan2(it.y, it.x) }.sorted()
     val angle = calculateAngle(angles, random, devSpawn.maxChildren, safeSectors)
 
     return when {
@@ -139,8 +138,7 @@ private fun Aggregate<Int>.executeSpawnLogic(
         else -> {
             val x = devSpawn.cloningRange * cos(angle)
             val y = devSpawn.cloningRange * sin(angle)
-            val absoluteDestination = localPosition + (x to y)
-
+            val absoluteDestination = localPosition + Position(x, y)
             devSpawn.spawn(absoluteDestination)
             Stability(spawnStable = false, destroyStable = localStability.destroyStable)
         }

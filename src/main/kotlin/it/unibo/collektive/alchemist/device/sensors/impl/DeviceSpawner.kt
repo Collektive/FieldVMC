@@ -8,6 +8,7 @@ import it.unibo.alchemist.model.molecules.SimpleMolecule
 import it.unibo.alchemist.model.times.DoubleTime
 import it.unibo.alchemist.util.RandomGenerators.nextDouble
 import it.unibo.collektive.alchemist.device.sensors.DeviceSpawn
+import it.unibo.collektive.model.Position as CollektivePosition
 import org.apache.commons.math3.random.RandomGenerator
 import kotlin.math.nextUp
 
@@ -38,12 +39,12 @@ constructor(
         DeviceSpawner(randomGenerator, environment, node, cloningRange, maxChildren, minSpawnWait)
 
     @Suppress("UNCHECKED_CAST")
-    override fun spawn(coordinate: Pair<Double, Double>): Double {
+    override fun spawn(coordinate: CollektivePosition): Double {
         val spawningTime =
             environment.simulation.time + DoubleTime(randomGenerator.nextDouble(0.0.nextUp(), MAX_SPAWN_JITTER))
         val cloneOfThis = node.cloneNode(spawningTime)
         cloneOfThis.setConcentration(SimpleMolecule("leader"), false as T)
-        val updatedPosition = environment.makePosition(*coordinate.toList().toTypedArray())
+        val updatedPosition = environment.makePosition(coordinate.x, coordinate.y)
         environment.addNode(cloneOfThis, updatedPosition)
         return spawningTime.toDouble()
     }

@@ -1,5 +1,7 @@
 package it.unibo.collektive.alchemist.device.sensors
 
+import it.unibo.collektive.model.Position
+
 /**
  * Interface representing the capability of a device to spawn new nodes or destroy itself in the environment.
  */
@@ -7,7 +9,7 @@ interface DeviceSpawn {
     /**
      * Spawns a new node in the given [coordinate].
      */
-    fun spawn(coordinate: Pair<Double, Double>): Double
+    fun spawn(coordinate: Position): Double
 
     /**
      * The node will destroy itself.

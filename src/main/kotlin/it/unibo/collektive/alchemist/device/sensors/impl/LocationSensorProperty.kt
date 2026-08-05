@@ -5,6 +5,7 @@ import it.unibo.alchemist.model.Node
 import it.unibo.alchemist.model.NodeProperty
 import it.unibo.alchemist.model.Position
 import it.unibo.collektive.alchemist.device.sensors.LocationSensor
+import it.unibo.collektive.model.Position as CollektivePosition
 
 /**
  * An Alchemist [NodeProperty] that provides the node with its current location
@@ -22,13 +23,13 @@ class LocationSensorProperty<T : Any, P : Position<P>>(
     NodeProperty<T> {
     override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> = LocationSensorProperty(environment, node)
 
-    override fun coordinates(): Pair<Double, Double> {
+    override fun coordinates(): CollektivePosition {
         val position = environment.getPosition(node).coordinates
-        return Pair(position[0], position[1])
+        return CollektivePosition(position[0], position[1])
     }
 
-    override fun surroundings(): List<Pair<Double, Double>> =
+    override fun surroundings(): List<CollektivePosition> =
         environment.getNeighborhood(node).map { node ->
-            environment.getPosition(node).coordinates.let { Pair(it[0], it[1]) }
+            environment.getPosition(node).coordinates.let { CollektivePosition(it[0], it[1]) }
         }
 }
