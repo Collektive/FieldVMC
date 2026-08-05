@@ -88,15 +88,9 @@
     "markerNodeID": 0
   },
   {
-    "type": "class it.unibo.alchemist.boundary.gui.effects.DrawTree",
-    "lastUpdated": 0.0,
-    "maxSuccess": 0.0,
-    "maxResource": 0.0
+    "type": "class it.unibo.alchemist.boundary.gui.effects.DrawTree"
   },
   {
-    "type": "class it.unibo.alchemist.boundary.gui.effects.DrawTreeNodes",
-    "lastUpdated": 0.0,
-    "maxSuccess": 0.0,
-    "maxResource": 0.0
+    "type": "class it.unibo.alchemist.boundary.gui.effects.DrawTreeNodes"
   }
 ]

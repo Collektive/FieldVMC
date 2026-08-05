@@ -16,13 +16,16 @@ import kotlin.math.max
 
 /** Shared lifecycle and data access for tree visualization effects. */
 abstract class AbstractTreeEffect : Effect {
+    @Transient
     private var lastUpdated = Time.NEGATIVE_INFINITY
 
     /** Maximum success currently present in the environment. */
+    @Transient
     protected var maxSuccess = 0.0
         private set
 
     /** Maximum resource currently present in the environment. */
+    @Transient
     protected var maxResource = 0.0
         private set
 
