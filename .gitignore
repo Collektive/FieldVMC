@@ -1,0 +1,18 @@
+# Ignore Gradle project-specific cache directory
+.gradle
+.idea/
+.spyproject/
+build/
+data_summary_*
+timeprocessed
+.DS_Store
+.env
+charts
+.kotlin
+/data/field-vmc-optimizing/
+/data/
+/charts/
+/messages-self-construction-fixed-leader_mean
+/messages-self-construction-fixed-leader_std
+/messages-self-construction-leader-election_mean
+/messages-self-construction-leader-election_std

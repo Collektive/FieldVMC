@@ -1,0 +1,79 @@
+variables:
+  seed: &seed
+    min: 0
+    max: 20
+    step: 1
+    default: 0
+  radius: &leaderRadius
+    100.0
+  maxResource: &maxResource
+   100000000.0
+  resourceLowerBound: &resourceLowerBound
+    5.0
+  maxChildren: &maxChildren
+    3
+  minSpanWait: &minSpanWait
+    40.0
+  layerX: &layerX
+    0
+  minY: &minY
+    0
+  maxY: &maxY
+    20
+  maxSuccess: &maxSuccess
+    formula: *maxResource
+  gaussianShape: &gaussianShape
+     5
+  range: &range
+    formula: cloningRange * 1.01
+  cloningRange: &cloningRange
+    formula: 1.2
+
+  sdf: &sdf
+    formula: |
+      it.unibo.common.sdf.inverseSDF(it.unibo.common.sdf.impl.Star(kotlin.Pair(0.0, 10.0), 7.0, 5, 2.5, true, 1.0))
+    language: kotlin
+network-model:
+  type: ConnectWithinDistance
+  parameters: *range
+
+seeds:
+  scenario: *seed
+  simulation: *seed
+
+layers:
+  - type: BidimensionalGaussianLayer
+    parameters: [*layerX, *minY, *maxResource, *gaussianShape]
+    molecule: localResource
+  - type: BidimensionalGaussianLayer
+    parameters: [*layerX, *maxY, *maxSuccess, *gaussianShape]
+    molecule: successSource
+
+incarnation: collektive
+
+_pool: &program
+  - time-distribution: 1
+    type: Event
+    actions:
+      - type: RunCollektiveProgram
+        parameters: [it.unibo.collektive.vmc.VMCSpawningKt.withSpawning]
+
+deployments:
+  - type: Point
+    parameters: [ 0, 17]
+    programs:
+      - *program
+    properties:
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LayerProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.SuccessSensorProperty
+        parameters: [ *maxSuccess ]
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LeaderSensorProperty
+        parameters: [ *leaderRadius ]
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
+        parameters: [ *resourceLowerBound, *maxResource ]
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.DeviceSpawner
+        parameters: [ *cloningRange, *maxChildren, *minSpanWait ]
+      - type: it.unibo.collektive.alchemist.device.properties.impl.CBFProperty
+        parameters: [ *sdf ]

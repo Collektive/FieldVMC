@@ -1,0 +1,35 @@
+[versions]
+kotlin = "2.3.20"
+alchemist = "43.0.33"
+collektive = "28.2.1"
+
+[libraries]
+alchemist = { module = "it.unibo.alchemist:alchemist", version.ref = "alchemist" }
+alchemist-swingui = { module = "it.unibo.alchemist:alchemist-swingui", version.ref = "alchemist" }
+alchemist-ui-tooling = { module = "it.unibo.alchemist:alchemist-ui-tooling", version.ref = "alchemist" }
+alchemist-euclidean-geometry = { module = "it.unibo.alchemist:alchemist-euclidean-geometry", version.ref = "alchemist" }
+caffeine = "com.github.ben-manes.caffeine:caffeine:3.2.2"
+collektive = { module = "it.unibo.collektive:collektive-dsl", version.ref = "collektive" }
+collektive-incarnation = { module = "it.unibo.collektive:alchemist-incarnation-collektive", version.ref = "collektive" }
+collektive-plugin = { module = "it.unibo.collektive:collektive-compiler-plugin", version.ref = "collektive" }
+collektive-stdlib = { module = "it.unibo.collektive:collektive-stdlib", version.ref = "collektive" }
+rrmxmx = { module = "org.danilopianini:rrmxmx-kt", version = "2.1.1" }
+symmetric-matrix = "org.danilopianini:kotlin-symmetric-matrix:1.1.7"
+
+[bundles]
+alchemist = [
+    "alchemist",
+    "alchemist-euclidean-geometry",
+    "alchemist-swingui",
+    "alchemist-ui-tooling"
+]
+collektive = ["collektive", "collektive-incarnation", "collektive-plugin", "collektive-stdlib"]
+
+[plugins]
+collektive = { id = "it.unibo.collektive.collektive-plugin", version.ref = "collektive" }
+gitSemVer = { id = "org.danilopianini.git-sensitive-semantic-versioning", version = "7.0.4" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-qa = { id = "org.danilopianini.gradle-kotlin-qa", version = "0.78.3" }
+multiJvmTesting = { id = "org.danilopianini.multi-jvm-test-plugin", version = "3.2.3" }
+taskTree = { id = "com.dorongold.task-tree", version = "4.0.1" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
