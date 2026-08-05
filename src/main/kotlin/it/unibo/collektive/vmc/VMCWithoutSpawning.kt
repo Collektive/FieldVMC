@@ -25,14 +25,12 @@ fun Aggregate<Int>.withoutSpawning(
     leaderS: LeaderSensor,
     resourceS: ResourceSensor,
     successS: SuccessSensor,
-): Double {
-    val isLeader = isLeader(device, leaderS, resourceS)
-    val potential = findPotential(device, isLeader)
+): Double = context(device, leaderS, resourceS, successS) {
+    val isLeader = isLeader()
+    val potential = findPotential(isLeader)
     env["potential"] = potential
     env["parent"] = findParent(potential)
-    val localSuccess = obtainLocalSuccess(successS)
-    val success = convergeSuccess(successS, potential, localSuccess)
-    val localResource = spreadResource(env, resourceS, potential, success)
-        .also { env["local-resource"] = it }
-    return localResource
+    val localSuccess = obtainLocalSuccess()
+    val success = convergeSuccess(potential, localSuccess)
+    spreadResource(potential, success).also { env["local-resource"] = it }
 }

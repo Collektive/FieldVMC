@@ -1,14 +1,16 @@
+@file:Suppress("UndocumentedPublicFunction")
+
 package it.unibo.collektive.utils
 
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.alchemist.device.sensors.DeviceSpawn
-import it.unibo.collektive.alchemist.device.sensors.LocationSensor
 import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import it.unibo.collektive.alchemist.device.sensors.ResourceSensor
+import it.unibo.collektive.model.Position
+import it.unibo.collektive.model.minus
+import it.unibo.collektive.model.plus
 import it.unibo.common.AngularSector
 import it.unibo.common.calculateAngle
-import it.unibo.common.minus
-import it.unibo.common.plus
 import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -23,9 +25,7 @@ import kotlin.math.sin
  * - [success] the global success of the node;
  * - [localResource] the local resources of the node.
  */
-typealias SpawnerNoStability = Aggregate<Int>.(
-    devSpawn: DeviceSpawn,
-    locationSensor: LocationSensor,
+typealias SpawnerNoStability<ID> = Aggregate<ID>.(
     potential: Double,
     localSuccess: Double,
     success: Double,
@@ -44,26 +44,29 @@ typealias SpawnerNoStability = Aggregate<Int>.(
  * The node is destroyed if the local resources are below the lower bound,
  * if it is not father of any node and the neighborhood is stable.
  */
-fun Aggregate<Int>.determineSpawn(
-    childrenCount: Int,
-    localResource: Double,
-    localPosition: Pair<Double, Double>,
-    neighborPositions: List<Pair<Double, Double>>,
-    devSpawn: DeviceSpawn,
+context(
     random: RandomGenerator,
     resourceS: ResourceSensor,
+    devSpawn: DeviceSpawn,
+)
+fun determineSpawn(
+    childrenCount: Int,
+    localResource: Double,
+    localPosition: Position,
+    neighborPositions: List<Position>,
 ) {
     if (neighborPositions.isEmpty() ||
         localResource / (2 + childrenCount) > resourceS.resourceLowerBound &&
         childrenCount < devSpawn.maxChildren
     ) {
         val relativePositions = neighborPositions.map { it - localPosition }
-        val angles = relativePositions.map { atan2(it.second, it.first) }.sorted()
+        val angles = relativePositions.map { atan2(it.y, it.x) }.sorted()
         val angle = calculateAngle(angles, random, devSpawn.maxChildren, listOf(AngularSector(0.0, 2 * PI)))
         if (!angle.isNaN()) {
-            val x = devSpawn.cloningRange * cos(angle)
-            val y = devSpawn.cloningRange * sin(angle)
-            val absoluteDestination = localPosition + (x to y)
+            val absoluteDestination = localPosition + Position(
+                devSpawn.cloningRange * cos(angle),
+                devSpawn.cloningRange * sin(angle),
+            )
             devSpawn.spawn(absoluteDestination)
         }
     }
