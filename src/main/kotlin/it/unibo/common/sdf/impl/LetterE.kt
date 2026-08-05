@@ -1,5 +1,6 @@
 package it.unibo.common.sdf.impl
 
+import it.unibo.collektive.model.Position
 import it.unibo.common.sdf.SDF
 
 /**
@@ -9,22 +10,26 @@ import it.unibo.common.sdf.SDF
  * @param height The total height of the letter.
  * @property thickness The thickness of the letter's strokes (default is 0.0).
  */
-class LetterE(start: Pair<Double, Double>, height: Double, private val thickness: Double = 0.0) : SDF {
-    private val vertical = Segment(start, Pair(start.first, start.second + height))
-    private val horizontalLow = Segment(start, Pair(start.first + height / HALF_DIVISOR, start.second))
+class LetterE(start: Position, height: Double, private val thickness: Double = 0.0) : SDF {
+    private val vertical = Segment(start, Position(start.x, start.y + height))
+    private val horizontalLow = Segment(start, Position(start.x + height / HALF_DIVISOR, start.y))
     private val horizontalCenter =
         Segment(
-            Pair(start.first, start.second + height / HALF_DIVISOR),
-            Pair(start.first + height * THREE_EIGHTHS, start.second + height / HALF_DIVISOR),
+            Position(start.x, start.y + height / HALF_DIVISOR),
+            Position(start.x + height * THREE_EIGHTHS, start.y + height / HALF_DIVISOR),
         )
     private val horizontalHigh =
         Segment(
-            Pair(start.first, start.second + height),
-            Pair(start.first + height / HALF_DIVISOR, start.second + height),
+            Position(start.x, start.y + height),
+            Position(start.x + height / HALF_DIVISOR, start.y + height),
         )
 
-    override fun invoke(p: Pair<Double, Double>): Double =
-        minOf(vertical(p), horizontalLow(p), horizontalCenter(p), horizontalHigh(p)) - thickness
+    override fun invoke(position: Position): Double = minOf(
+        vertical(position),
+        horizontalLow(position),
+        horizontalCenter(position),
+        horizontalHigh(position),
+    ) - thickness
 
     /**
      * Constants used for proportional geometry calculations.

@@ -1,5 +1,6 @@
 package it.unibo.common.sdf.impl
 
+import it.unibo.collektive.model.Position
 import it.unibo.common.sdf.SDF
 import kotlin.math.PI
 import kotlin.math.abs
@@ -20,7 +21,7 @@ import kotlin.math.sqrt
  * @property thickness The thickness of the ring, or used to make round corners (default is 0.0).
  */
 class Star(
-    private val center: Pair<Double, Double>,
+    private val center: Position,
     private val radius: Double,
     private val n: Int,
     m: Double = n / 2.0,
@@ -35,9 +36,9 @@ class Star(
     private val ecsX = cos(en)
     private val ecsY = sin(en)
 
-    override fun invoke(p: Pair<Double, Double>): Double {
-        var px = p.first - center.first
-        var py = p.second - center.second
+    override fun invoke(position: Position): Double {
+        var px = position.x - center.x
+        var py = position.y - center.y
 
         val angle = atan2(px, py)
         val twoAn = 2.0 * an

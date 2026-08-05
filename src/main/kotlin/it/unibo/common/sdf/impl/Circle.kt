@@ -1,5 +1,6 @@
 package it.unibo.common.sdf.impl
 
+import it.unibo.collektive.model.Position
 import it.unibo.common.pointsDistance
 import it.unibo.common.sdf.SDF
 import kotlin.math.abs
@@ -13,13 +14,13 @@ import kotlin.math.abs
  * @property thickness The thickness of the ring if [isRing] is true (default is 0.0).
  */
 class Circle(
-    private val center: Pair<Double, Double>,
+    private val center: Position,
     private val radius: Double,
     private val isRing: Boolean = false,
     private val thickness: Double = 0.0,
 ) : SDF {
-    override fun invoke(p: Pair<Double, Double>): Double {
-        val circleDist = radius - pointsDistance(p, center)
+    override fun invoke(position: Position): Double {
+        val circleDist = radius - pointsDistance(position, center)
 
         return if (isRing) abs(circleDist) - thickness else circleDist
     }

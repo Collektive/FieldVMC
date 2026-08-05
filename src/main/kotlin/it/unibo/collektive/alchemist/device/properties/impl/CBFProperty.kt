@@ -18,7 +18,7 @@ import it.unibo.common.sdf.SDF
 class CBFProperty<T>(override val node: Node<T>, private val sdf: SDF) :
     CBF,
     NodeProperty<T> {
-    override fun isSafe(position: Position): Double = sdf(position.x to position.y)
+    override fun isSafe(position: Position): Double = sdf(position)
 
     override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> = CBFProperty(node, sdf)
 }

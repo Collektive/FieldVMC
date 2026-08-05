@@ -1,15 +1,17 @@
 package it.unibo.common.sdf
 
+import it.unibo.collektive.model.Position
+
 /**
  * Represents a 2D Signed Distance Field (SDF).
  * A functional interface that evaluates the signed distance from a given point to the boundary of a shape.
  */
 fun interface SDF {
     /**
-     * returns the distance of the point [p] from the surface of the SDF.
+     * Returns the distance of [position] from the surface of the SDF.
      * if the value is negative, the point is inside the SDF.
      */
-    operator fun invoke(p: Pair<Double, Double>): Double
+    operator fun invoke(position: Position): Double
 }
 
 /**
@@ -17,4 +19,4 @@ fun interface SDF {
  * * By negating the distance value, the internal regions (traditionally negative) become
  * external (positive), and the external regions become internal.
  */
-fun inverseSDF(shape: SDF): SDF = SDF { p -> -shape(p) }
+fun inverseSDF(shape: SDF): SDF = SDF { position -> -shape(position) }

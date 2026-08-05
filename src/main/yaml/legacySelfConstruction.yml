@@ -31,7 +31,7 @@ variables:
 
   sdf: &sdf
     formula: |
-      it.unibo.common.sdf.inverseSDF(it.unibo.common.sdf.impl.Star(kotlin.Pair(0.0, 10.0), 7.0, 5, 2.5, true, 1.0))
+      it.unibo.common.sdf.inverseSDF(it.unibo.common.sdf.impl.Star(it.unibo.collektive.model.Position(0.0, 10.0), 7.0, 5, 2.5, true, 1.0))
     language: kotlin
 network-model:
   type: ConnectWithinDistance
