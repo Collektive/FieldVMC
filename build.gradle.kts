@@ -1,9 +1,8 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 import java.awt.GraphicsEnvironment
-import org.gradle.process.ExecOperations
-import org.gradle.internal.extensions.core.serviceOf
 import java.io.ByteArrayOutputStream
-import java.util.*
+import java.util.Locale
+import org.gradle.internal.extensions.core.serviceOf
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
     application
@@ -18,6 +17,15 @@ plugins {
 
 repositories {
     mavenCentral()
+}
+
+configurations.named("ktlint") {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "com.pinterest.ktlint") {
+            useVersion("1.8.0")
+            because("Ktlint 1.5 cannot parse Kotlin named context parameters")
+        }
+    }
 }
 
 sourceSets {
@@ -86,16 +94,15 @@ val runAllOptimizer by tasks.register<DefaultTask>("runAllOptimizer") {
     description = "Launches all experiments with the optimizer enabled"
 }
 
-fun String.capitalizeString(): String =
-    this.replaceFirstChar {
-        if (it.isLowerCase()) {
-            it.titlecase(
-                Locale.getDefault(),
-            )
-        } else {
-            it.toString()
-        }
+fun String.capitalizeString(): String = this.replaceFirstChar {
+    if (it.isLowerCase()) {
+        it.titlecase(
+            Locale.getDefault(),
+        )
+    } else {
+        it.toString()
     }
+}
 
 /*
  * Scan the folder with the simulation files and create a task for each one of them.
@@ -105,10 +112,7 @@ File(rootProject.rootDir.path + "/src/main/yaml")
     ?.filter { it.extension == "yml" }
     ?.sortedBy { it.nameWithoutExtension }
     ?.forEach {
-        fun basetask(
-            name: String,
-            additionalConfiguration: JavaExec.() -> Unit = {},
-        ) = tasks.register<JavaExec>(name) {
+        fun basetask(name: String, additionalConfiguration: JavaExec.() -> Unit = {}) = tasks.register<JavaExec>(name) {
             description = "Launches graphic simulation ${it.nameWithoutExtension}"
             mainClass.set("it.unibo.alchemist.Alchemist")
             classpath = sourceSets["main"].runtimeClasspath
@@ -149,84 +153,86 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                     args(
                         "--override",
                         """
-                    variables:
-                      metrics: &metrics
-                        formula: |
-                          it.unibo.common.TerminationMetrics()
-                        language: kotlin
-                    
-                    launcher:
-                      type: DefaultLauncher
-                      parameters: {
-                        batch: ["seed", "origin"],
-                        autoStart: true,
-                      }
-                      
-                    terminate: { type: AfterTime, parameters: [1000] }
-                    """.trimIndent(),
+                        variables:
+                          metrics: &metrics
+                            formula: |
+                              it.unibo.common.TerminationMetrics()
+                            language: kotlin
+
+                        launcher:
+                          type: DefaultLauncher
+                          parameters: {
+                            batch: ["seed", "origin"],
+                            autoStart: true,
+                          }
+
+                        terminate: { type: AfterTime, parameters: [1000] }
+                        """.trimIndent(),
                     )
-                } else if (capitalizedName.endsWith("VMC") && !capitalizedName.startsWith("SelfHealing") && !capitalizedName.startsWith(
-                        "Messages"
+                } else if (capitalizedName.endsWith("VMC") &&
+                    !capitalizedName.startsWith("SelfHealing") &&
+                    !capitalizedName.startsWith(
+                        "Messages",
                     )
                 ) {
                     args(
                         "--override",
                         """
-                    variables:
-                    metrics: &metrics
-                        formula: |
-                        it.unibo.common.TerminationMetrics()
-                        language: kotlin
+                        variables:
+                        metrics: &metrics
+                            formula: |
+                            it.unibo.common.TerminationMetrics()
+                            language: kotlin
+
+                        terminate:
+                        type: MetricsStableForTime
+                        parameters: {
+                            stableForTime: 30.0,
+                            timeIntervalToCheck: 2.0,
+                            equalTimes: 3,
+                            metricsToCheck: *metrics,
+                        }
                         
-                    terminate:
-                    type: MetricsStableForTime
-                    parameters: {
-                        stableForTime: 30.0,
-                        timeIntervalToCheck: 2.0,
-                        equalTimes: 3,
-                        metricsToCheck: *metrics,
-                    }
-                  
-                    launcher:
-                    type: DefaultLauncher
-                    parameters: {
-                        batch: ["seed"],
-                        autoStart: true,
-                    }
-                    """.trimIndent(),
+                        launcher:
+                        type: DefaultLauncher
+                        parameters: {
+                            batch: ["seed"],
+                            autoStart: true,
+                        }
+                        """.trimIndent(),
                     )
-                } else if(capitalizedName.contains("Leader")) {
+                } else if (capitalizedName.contains("Leader")) {
                     args(
                         "--override",
                         """
-                    launcher:
-                      type: DefaultLauncher
-                      parameters: {
-                        batch: ["seed", "maxResource", "maxChildren"],
-                        autoStart: true,
-                      }
-                      
-                      terminate: { type: AfterTime, parameters: [10000] }
-                    """.trimIndent(),
+                        launcher:
+                          type: DefaultLauncher
+                          parameters: {
+                            batch: ["seed", "maxResource", "maxChildren"],
+                            autoStart: true,
+                          }
+
+                          terminate: { type: AfterTime, parameters: [10000] }
+                        """.trimIndent(),
                     )
                 } else {
                     args(
                         "--override",
                         """
-                    launcher:
-                      type: DefaultLauncher
-                      parameters: {
-                        batch: ["seed", "initialNodes"],
-                        autoStart: true,
-                      }
-                    """.trimIndent(),
+                        launcher:
+                          type: DefaultLauncher
+                          parameters: {
+                            batch: ["seed", "initialNodes"],
+                            autoStart: true,
+                          }
+                        """.trimIndent(),
                     )
                 }
             }
             runAllBatch.dependsOn(batch)
         }
         if (capitalizedName.endsWith("Optimizer")) {
-            val optimizer by basetask("run${capitalizedName}") {
+            val optimizer by basetask("run$capitalizedName") {
                 setDependsOn(listOf("runSelfConstructionClassicVMCBatch"))
                 group = alchemistGroupOptimizer
                 description = "Launches Nelder Mead parameters optimizer for $capitalizedName"

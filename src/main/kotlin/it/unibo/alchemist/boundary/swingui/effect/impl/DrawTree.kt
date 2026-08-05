@@ -7,7 +7,6 @@ import it.unibo.alchemist.boundary.ui.api.Wormhole2D
 import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.model.Node
 import it.unibo.alchemist.model.Position2D
-import org.apache.commons.math3.util.FastMath.pow
 import java.awt.BasicStroke
 import java.awt.Color
 import java.awt.Graphics2D
@@ -18,6 +17,7 @@ import kotlin.math.cos
 import kotlin.math.hypot
 import kotlin.math.sin
 import kotlin.math.sqrt
+import org.apache.commons.math3.util.FastMath.pow
 
 /**
  * An Alchemist [Effect] that draws a tree structure connecting nodes to their parents.
@@ -56,10 +56,7 @@ class DrawTree : AbstractTreeEffect() {
                             )
                         g.color = SUCCESS_COLOR
 
-                        fun drawLine(
-                            p1: Point,
-                            p2: Point,
-                        ) = g.drawLine(p1.x, p1.y, p2.x, p2.y)
+                        fun drawLine(p1: Point, p2: Point) = g.drawLine(p1.x, p1.y, p2.x, p2.y)
                         drawLine(viewPoint, midpoint1)
                         drawLine(midpoint1, screenNeighborPosition)
                         //                g.drawString("%.2f".format(localSuccess), midpoint1.x, midpoint1.y)
@@ -114,7 +111,7 @@ class DrawTree : AbstractTreeEffect() {
         /**
          * Minimum arc distance for rendering.
          */
-        const val minArcDistance = 10
+        const val MIN_ARC_DISTANCE = 10
 
         /**
          * Represents a mathematical line defined by a passing point ([x], [y]) and a [slope].
@@ -123,27 +120,17 @@ class DrawTree : AbstractTreeEffect() {
          * @property y The Y coordinate of the point.
          * @property slope The slope of the line.
          */
-        data class Line(
-            val x: Int,
-            val y: Int,
-            val slope: Double,
-        )
+        data class Line(val x: Int, val y: Int, val slope: Double)
 
         /**
          * Computes the geometric midpoint between [p1] and [p2].
          */
-        fun midpoint(
-            p1: Point,
-            p2: Point,
-        ): Point = Point((p1.x + p2.x) / 2, (p1.y + p2.y) / 2)
+        fun midpoint(p1: Point, p2: Point): Point = Point((p1.x + p2.x) / 2, (p1.y + p2.y) / 2)
 
         /**
          * Computes the perpendicular bisector [Line] between [p1] and [p2].
          */
-        fun perpendicularBisector(
-            p1: Point,
-            p2: Point,
-        ): Line {
+        fun perpendicularBisector(p1: Point, p2: Point): Line {
             val midPoint = midpoint(p1, p2)
             val slope =
                 if (p2.y != p1.y) {
@@ -159,13 +146,7 @@ class DrawTree : AbstractTreeEffect() {
          * Calculates the intersection points of a circle with a given radius [r],
          * centered at ([x2], [y2]), intersecting a segment originating from ([x1], [y1]).
          */
-        fun circleIntersection(
-            r: Double,
-            x1: Int,
-            y1: Int,
-            x2: Int,
-            y2: Int,
-        ): Array<Point> {
+        fun circleIntersection(r: Double, x1: Int, y1: Int, x2: Int, y2: Int): Array<Point> {
             val d = hypot((x2 - x1).toDouble(), (y2 - y1).toDouble())
             check(d < r)
             val h = hypot(r, d)
@@ -179,11 +160,7 @@ class DrawTree : AbstractTreeEffect() {
         /**
          * Shifts the midpoint between [p1] and [p2] perpendicularly by a distance [d].
          */
-        fun midpointShift(
-            p1: Point,
-            p2: Point,
-            d: Int,
-        ): Pair<Point, Point> {
+        fun midpointShift(p1: Point, p2: Point, d: Int): Pair<Point, Point> {
             val midpoint = midpoint(p1, p2)
             val angle = atan2((p2.y - p1.y).toDouble(), (p2.x - p1.x).toDouble())
             val points =
@@ -200,11 +177,7 @@ class DrawTree : AbstractTreeEffect() {
          * Calculates circles passing through [p1] and [p2] whose centers are
          * shifted perpendicularly from the midpoint by distance [d].
          */
-        fun circlesThrough(
-            p1: Point,
-            p2: Point,
-            d: Int,
-        ): List<Circle> {
+        fun circlesThrough(p1: Point, p2: Point, d: Int): List<Circle> {
             require(d > 0)
             val midpoint = midpoint(p1, p2)
             val angle = atan2((p2.y - p1.y).toDouble(), (p2.x - p1.x).toDouble())
@@ -237,11 +210,7 @@ class DrawTree : AbstractTreeEffect() {
  * @property y The Y coordinate of the center.
  * @property radius The radius of the circle.
  */
-data class Circle(
-    val x: Int,
-    val y: Int,
-    val radius: Double,
-)
+data class Circle(val x: Int, val y: Int, val radius: Double)
 
 private const val TEST_POINT_Y = 10
 private const val TEST_DISTANCE = 15

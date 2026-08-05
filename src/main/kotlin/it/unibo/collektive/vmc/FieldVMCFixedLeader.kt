@@ -41,11 +41,10 @@ context(
     successS: SuccessSensor,
     devSpawn: DeviceSpawn,
 )
-fun Aggregate<Int>.fixedRootStability(): Double =
-    vmcFixedLeader { potential, localSuccess, success, localResource ->
-        val (childrenCount, localPosition, neighborPositions) = extractNeighborhoodPositions(potential)
-        determineSpawn(childrenCount, localResource, localPosition, neighborPositions)
-    }
+fun Aggregate<Int>.fixedRootStability(): Double = vmcFixedLeader { potential, localSuccess, success, localResource ->
+    val (childrenCount, localPosition, neighborPositions) = extractNeighborhoodPositions(potential)
+    determineSpawn(childrenCount, localResource, localPosition, neighborPositions)
+}
 
 /**
  * Core execution logic of the VMC algorithm with a fixed leader.
@@ -55,9 +54,7 @@ context(
     resourceS: ResourceSensor,
     successS: SuccessSensor,
 )
-inline fun <reified ID : Comparable<ID>> Aggregate<ID>.vmcFixedLeader(
-    spawner: SpawnerNoStability<ID>,
-): Double {
+inline fun <reified ID : Comparable<ID>> Aggregate<ID>.vmcFixedLeader(spawner: SpawnerNoStability<ID>): Double {
     val isLeader: Boolean = device["leader"]
     val potential = findPotential(isLeader)
     val localSuccess = obtainLocalSuccess()

@@ -15,35 +15,34 @@ import it.unibo.alchemist.model.molecules.SimpleMolecule
  * hierarchical relationship (parent-child).
  */
 class NodeDegree
-    @JvmOverloads
-    constructor(
-        filter: ExportFilter,
-        aggregators: List<String>,
-        private val checkChildren: Boolean = false,
-        precision: Int = 2,
-    ) : AbstractAggregatingDoubleExtractor(filter, aggregators, precision) {
-        private companion object {
-            private const val NAME = "nodes-degree"
-        }
-
-        override val columnName: String = NAME
-
-        override fun <T> getData(
-            environment: Environment<T, *>,
-            reaction: Actionable<T>?,
-            time: Time,
-            step: Long,
-        ): Map<Node<T>, Double> =
-            environment.nodes.associateWith { node ->
-                val neighbors = environment.getNeighborhood(node)
-                if (checkChildren) {
-                    neighbors
-                        .filter { n ->
-                            n.getConcentration(SimpleMolecule("parent")) == node.id ||
-                                node.getConcentration(SimpleMolecule("parent")) == n.id
-                        }.size
-                } else {
-                    neighbors.size()
-                }.toDouble()
-            }
+@JvmOverloads
+constructor(
+    filter: ExportFilter,
+    aggregators: List<String>,
+    private val checkChildren: Boolean = false,
+    precision: Int = 2,
+) : AbstractAggregatingDoubleExtractor(filter, aggregators, precision) {
+    private companion object {
+        private const val NAME = "nodes-degree"
     }
+
+    override val columnName: String = NAME
+
+    override fun <T> getData(
+        environment: Environment<T, *>,
+        reaction: Actionable<T>?,
+        time: Time,
+        step: Long,
+    ): Map<Node<T>, Double> = environment.nodes.associateWith { node ->
+        val neighbors = environment.getNeighborhood(node)
+        if (checkChildren) {
+            neighbors
+                .filter { n ->
+                    n.getConcentration(SimpleMolecule("parent")) == node.id ||
+                        node.getConcentration(SimpleMolecule("parent")) == n.id
+                }.size
+        } else {
+            neighbors.size()
+        }.toDouble()
+    }
+}

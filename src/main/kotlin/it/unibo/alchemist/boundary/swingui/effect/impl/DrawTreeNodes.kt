@@ -62,16 +62,12 @@ class DrawTreeNodes : AbstractTreeEffect() {
         }
     }
 
-    private fun calculateNodeSize(
-        localResource: Double,
-        localSuccess: Double,
-    ): Double =
-        when {
-            localResource > 0 && localSuccess > 0 -> localResource / maxResource + localSuccess / maxSuccess
-            localResource > 0 -> localResource / maxResource
-            localSuccess > 0 -> localSuccess / maxSuccess
-            else -> 0.0.nextUp()
-        }
+    private fun calculateNodeSize(localResource: Double, localSuccess: Double): Double = when {
+        localResource > 0 && localSuccess > 0 -> localResource / maxResource + localSuccess / maxSuccess
+        localResource > 0 -> localResource / maxResource
+        localSuccess > 0 -> localSuccess / maxSuccess
+        else -> 0.0.nextUp()
+    }
 
     private fun <P : Position2D<P>> calculateScreenSize(
         size: Double,
@@ -84,15 +80,11 @@ class DrawTreeNodes : AbstractTreeEffect() {
         val sizeFromLocation = sizeAsPosition + nodePosition.coordinates
         return (wormhole.getViewPoint(sizeFromLocation) - viewPoint)
             .let { Point(abs(it.x), abs(it.y)) }
-            .takeIf { it.x > minNodeSize && it.y > minNodeSize }
-            ?: Point(minNodeSize, minNodeSize)
+            .takeIf { it.x > MIN_NODE_SIZE && it.y > MIN_NODE_SIZE }
+            ?: Point(MIN_NODE_SIZE, MIN_NODE_SIZE)
     }
 
-    private fun drawLeaderArcs(
-        g: Graphics2D,
-        viewPoint: Point,
-        sizeInScreenCoordinates: Point,
-    ) {
+    private fun drawLeaderArcs(g: Graphics2D, viewPoint: Point, sizeInScreenCoordinates: Point) {
         g.stroke =
             BasicStroke(
                 LEADER_STROKE_SCALE * sizeInScreenCoordinates.x.toFloat(),
@@ -157,7 +149,7 @@ class DrawTreeNodes : AbstractTreeEffect() {
         /**
          * The minimum visual size of a node on the screen.
          */
-        const val minNodeSize = 10
+        const val MIN_NODE_SIZE = 10
 
         private const val LEADER_STROKE_SCALE = 0.1f
         private const val LEADER_ARC_COLOR_HEX = 0x333333

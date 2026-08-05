@@ -15,10 +15,8 @@ import it.unibo.collektive.alchemist.device.sensors.EnvironmentLayer
  * @param environment The simulation environment containing the layers.
  * @property node The Alchemist node this property is attached to.
  */
-class LayerProperty<T, P : Position<P>>(
-    private val environment: Environment<T, P>,
-    override val node: Node<T>,
-) : EnvironmentLayer,
+class LayerProperty<T, P : Position<P>>(private val environment: Environment<T, P>, override val node: Node<T>) :
+    EnvironmentLayer,
     NodeProperty<T> {
     override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> = LayerProperty(environment, node)
 
@@ -30,8 +28,5 @@ class LayerProperty<T, P : Position<P>>(
 
     override fun isLayerDefined(name: String): Boolean = environment.getLayer(SimpleMolecule(name)) != null
 
-    override fun <T> getFromLayerOrDefault(
-        name: String,
-        default: T,
-    ): T = getFromLayer(name) ?: default
+    override fun <T> getFromLayerOrDefault(name: String, default: T): T = getFromLayer(name) ?: default
 }

@@ -7,10 +7,7 @@ import kotlin.math.PI
  * Selects a [random] element from the iterable,
  * with a probability proportional to the value returned by the [by] function.
  */
-fun <T> Iterable<T>.randomElementWeighted(
-    random: RandomGenerator,
-    by: T.() -> Double,
-): T {
+fun <T> Iterable<T>.randomElementWeighted(random: RandomGenerator, by: T.() -> Double): T {
     val total = fold(0.0) { acc, element -> acc + by(element) }
     val selector: Double = random.nextRandomDouble(0.0..total)
     var accumulator = 0.0
@@ -44,16 +41,16 @@ fun calculateAngle(
 
     val differences =
         when {
-        angles.isEmpty() -> listOf(AngularSector(0.0, 2 * PI))
-        angles.size == 1 -> listOf(AngularSector(angles.first(), 2 * PI))
-        else -> {
-            val sortedAngles = angles.sorted()
-            val fullCircle = sortedAngles + (sortedAngles.first() + 2 * PI)
-            fullCircle
-                .zipWithNext { a, b -> AngularSector(a, b - a) }
-                .filter { it.arc >= minArc }
+            angles.isEmpty() -> listOf(AngularSector(0.0, 2 * PI))
+            angles.size == 1 -> listOf(AngularSector(angles.first(), 2 * PI))
+            else -> {
+                val sortedAngles = angles.sorted()
+                val fullCircle = sortedAngles + (sortedAngles.first() + 2 * PI)
+                fullCircle
+                    .zipWithNext { a, b -> AngularSector(a, b - a) }
+                    .filter { it.arc >= minArc }
+            }
         }
-    }
 
     val linearDiffs = differences.flatMap { splitAtZero(it) }
     val linearSafe = safeSectors.flatMap { splitAtZero(it) }

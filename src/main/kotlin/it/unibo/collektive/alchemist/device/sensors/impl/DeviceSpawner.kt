@@ -9,8 +9,8 @@ import it.unibo.alchemist.model.times.DoubleTime
 import it.unibo.alchemist.util.RandomGenerators.nextDouble
 import it.unibo.collektive.alchemist.device.sensors.DeviceSpawn
 import it.unibo.collektive.model.Position as CollektivePosition
-import org.apache.commons.math3.random.RandomGenerator
 import kotlin.math.nextUp
+import org.apache.commons.math3.random.RandomGenerator
 
 /**
  * An Alchemist [NodeProperty] that allows a node to spawn new nodes or destroy itself.

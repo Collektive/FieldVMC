@@ -64,22 +64,20 @@ internal val treeSuccess = SimpleMolecule("success")
 internal val treeResource = SimpleMolecule("resource")
 internal val treeLeader = SimpleMolecule("leader")
 
-internal fun Any?.toTreeInt(): Int? =
-    when (this) {
-        is Int -> this
-        is Number -> toInt()
-        is String -> toInt()
-        null, Unit -> null
-        else -> error("Unexpected integer: $this")
-    }
+internal fun Any?.toTreeInt(): Int? = when (this) {
+    is Int -> this
+    is Number -> toInt()
+    is String -> toInt()
+    null, Unit -> null
+    else -> error("Unexpected integer: $this")
+}
 
-internal fun Any?.toTreeDouble(): Double =
-    when (this) {
-        is Double -> this
-        is Number -> toDouble()
-        null, Unit -> 0.0
-        else -> error("Unexpected number: $this")
-    }
+internal fun Any?.toTreeDouble(): Double = when (this) {
+    is Double -> this
+    is Number -> toDouble()
+    null, Unit -> 0.0
+    else -> error("Unexpected number: $this")
+}
 
 internal operator fun Point.plus(other: Point): Point = Point(x + other.x, y + other.y)
 

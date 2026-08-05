@@ -35,10 +35,7 @@ const val IMPRECISION = 0.95
  * because there is no sign change. Furthermore, if two zero-crossings are closer
  * to each other than [MIN], they might be skipped and not detected.
 */
-fun findZeros(
-    r: Double,
-    validator: (Double) -> Double,
-): List<Double> {
+fun findZeros(r: Double, validator: (Double) -> Double): List<Double> {
     val zeros = mutableListOf<Double>()
     var angle = 0.0
     var prev = 0.0
@@ -84,11 +81,7 @@ fun findZeros(
  * @return The angle (in radians) that represents the root.
  * @throws IllegalArgumentException If [first] and [second] do not bracket a root (i.e., they have the same sign).
  */
-fun bisection(
-    first: Double,
-    second: Double,
-    validator: (Double) -> Double,
-): Double {
+fun bisection(first: Double, second: Double, validator: (Double) -> Double): Double {
     val vFirst = validator(first)
     val vSecond = validator(second)
 

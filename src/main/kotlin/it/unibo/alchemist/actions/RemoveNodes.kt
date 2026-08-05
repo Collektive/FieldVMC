@@ -24,10 +24,8 @@ class RemoveNodes<T, P : Position<P>>(
     private val width: Double,
     private val height: Double,
 ) : AbstractAction<T>(node) {
-    override fun cloneAction(
-        node: Node<T>,
-        reaction: Reaction<T>,
-    ): Action<T> = RemoveNodes(environment, node, killingRange, origin, width, height)
+    override fun cloneAction(node: Node<T>, reaction: Reaction<T>): Action<T> =
+        RemoveNodes(environment, node, killingRange, origin, width, height)
 
     override fun execute() {
         val nodePosition = environment.getPosition(node).coordinates

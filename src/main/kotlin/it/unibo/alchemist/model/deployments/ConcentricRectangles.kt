@@ -3,8 +3,8 @@ package it.unibo.alchemist.model.deployments
 import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.model.Position
 import it.unibo.alchemist.util.RandomGenerators.nextDouble
-import org.apache.commons.math3.random.RandomGenerator
 import kotlin.math.absoluteValue
+import org.apache.commons.math3.random.RandomGenerator
 
 /**
  * An Alchemist deployment strategy that places nodes randomly within the space
@@ -48,7 +48,7 @@ class ConcentricRectangles<P : Position<P>>(
      * @property width The width of the rectangle.
      * @property height The height of the rectangle.
      */
-    data class Rectangle(val startX: Double, val startY: Double, val width: Double, val height: Double){
+    data class Rectangle(val startX: Double, val startY: Double, val width: Double, val height: Double) {
 
         /**
          * The total area of the rectangle.
@@ -77,12 +77,14 @@ class ConcentricRectangles<P : Position<P>>(
                 innerStartX,
                 innerStartY + innerHeight,
                 innerWidth,
-                ((outerStartY + outerHeight) - (innerStartY + innerHeight)).absoluteValue),
+                ((outerStartY + outerHeight) - (innerStartY + innerHeight)).absoluteValue,
+            ),
             Rectangle(
                 innerStartX + innerWidth,
                 outerStartY,
                 ((outerStartX + outerWidth) - (innerStartX + innerWidth)).absoluteValue,
-                outerHeight),
+                outerHeight,
+            ),
         )
     }
 
@@ -95,7 +97,7 @@ class ConcentricRectangles<P : Position<P>>(
         }.let { rectangle ->
             environment.makePosition(
                 randomGenerator.nextDouble(rectangle.startX, rectangle.startX + rectangle.width),
-                randomGenerator.nextDouble(rectangle.startY, rectangle.startY + rectangle.height)
+                randomGenerator.nextDouble(rectangle.startY, rectangle.startY + rectangle.height),
             )
         }
     }

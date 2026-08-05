@@ -19,10 +19,8 @@ class MoveCluster<T : Any, P : Position<P>>(
     private val node: Node<T>,
     private val movingRange: Double,
 ) : AbstractAction<T>(node) {
-    override fun cloneAction(
-        node: Node<T>,
-        reaction: Reaction<T>,
-    ): Action<T> = MoveCluster(environment, node, movingRange)
+    override fun cloneAction(node: Node<T>, reaction: Reaction<T>): Action<T> =
+        MoveCluster(environment, node, movingRange)
 
     override fun execute() {
         val nodePosition = environment.getPosition(node).coordinates

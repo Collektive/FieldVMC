@@ -19,9 +19,7 @@ context(
     environmentVariables: EnvironmentVariables,
     locationSensor: LocationSensor,
 )
-inline fun <reified ID : Comparable<ID>> Aggregate<ID>.extractNeighborhoodPositions(
-    potential: Double,
-): LocalInfo {
+inline fun <reified ID : Comparable<ID>> Aggregate<ID>.extractNeighborhoodPositions(potential: Double): LocalInfo {
     val children = neighboring(findParent(potential))
     val childrenCount = children.neighbors.countMatching { it.value == localId }
     environmentVariables["parent"] = children.local.value

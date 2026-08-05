@@ -17,6 +17,6 @@ inline fun <reified ID : Any, reified C : Comparable<C>> Aggregate<ID>.boundedEl
     boundedElection(
         strength = localStrength,
         bound = radius,
-        metric = distances()
+        metric = distances(),
     )
 }

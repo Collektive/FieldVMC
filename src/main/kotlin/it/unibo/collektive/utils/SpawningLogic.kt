@@ -38,10 +38,7 @@ typealias Spawner<ID> = Aggregate<ID>.(
  * @property spawnStable Indicates whether the node is stable for spawning.
  * @property destroyStable Indicates whether the node is stable for destruction.
  */
-data class Stability(
-    val spawnStable: Boolean = false,
-    val destroyStable: Boolean = false,
-) : Serializable {
+data class Stability(val spawnStable: Boolean = false, val destroyStable: Boolean = false) : Serializable {
 
     /**
      * Companion object containing the serialization version UID.
@@ -94,9 +91,11 @@ fun determineStability(
 
     val shouldSpawn =
         neighborPositions.isEmpty() ||
-            (localResource / (2 + childrenCount) > resourceSensor.resourceLowerBound &&
-                childrenCount < devSpawn.maxChildren &&
-                everyoneIsStable)
+            (
+                localResource / (2 + childrenCount) > resourceSensor.resourceLowerBound &&
+                    childrenCount < devSpawn.maxChildren &&
+                    everyoneIsStable
+                )
 
     return when {
         shouldDestroy -> {

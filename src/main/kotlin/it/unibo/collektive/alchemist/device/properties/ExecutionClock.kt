@@ -30,20 +30,16 @@ interface ExecutionClock {
 /**
  * A clock that keeps track of the current [time] and [action] of a node.
  */
-data class Clock(
-    val time: Int = 0,
-    val action: Cycle = SPAWNING,
-) {
+data class Clock(val time: Int = 0, val action: Cycle = SPAWNING) {
     /**
      * Evaluates and returns the next [Clock].
      */
-    fun next(): Clock =
-        when (action) {
-            BACKWARD -> Clock(time, action.nextStep())
-            FORWARD -> Clock(time, action.nextStep())
-            MAX -> Clock(time, action.nextStep())
-            SPAWNING -> Clock(time + 1, action.nextStep())
-        }
+    fun next(): Clock = when (action) {
+        BACKWARD -> Clock(time, action.nextStep())
+        FORWARD -> Clock(time, action.nextStep())
+        MAX -> Clock(time, action.nextStep())
+        SPAWNING -> Clock(time + 1, action.nextStep())
+    }
 }
 
 /**
@@ -75,11 +71,10 @@ enum class Cycle {
     /**
      * Returns the opposite direction of the current one.
      */
-    fun nextStep(): Cycle =
-        when (this) {
-            BACKWARD -> FORWARD
-            FORWARD -> MAX
-            MAX -> SPAWNING
-            SPAWNING -> BACKWARD
-        }
+    fun nextStep(): Cycle = when (this) {
+        BACKWARD -> FORWARD
+        FORWARD -> MAX
+        MAX -> SPAWNING
+        SPAWNING -> BACKWARD
+    }
 }

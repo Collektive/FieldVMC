@@ -18,7 +18,7 @@ constructor(
     private val timeIntervalToCheck: Time = ZERO,
     private val equalTimes: Long,
     private val metricsToCheck: (Environment<T, Position<*>>) -> Map<String, T>,
-): TerminationPredicate<T, Position<*>> {
+) : TerminationPredicate<T, Position<*>> {
     private var timeStabilitySuccess: Time = ZERO
     private var lastChecked: Time = ZERO
     private var equalSuccess: Long = 0
@@ -43,10 +43,12 @@ constructor(
                 when {
                     lastUpdatedMetrics == metrics -> {
                         timeStabilitySuccess += checkedInterval
-                        if(timeStabilitySuccess >= stableForTime) {
+                        if (timeStabilitySuccess >= stableForTime) {
                             timeStabilitySuccess = ZERO
                             ++equalSuccess >= equalTimes
-                        } else false
+                        } else {
+                            false
+                        }
                     }
                     else -> {
                         timeStabilitySuccess = ZERO

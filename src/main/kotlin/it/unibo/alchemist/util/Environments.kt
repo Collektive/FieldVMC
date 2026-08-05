@@ -13,10 +13,10 @@ import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.model.Network
 import it.unibo.alchemist.model.Node
 import it.unibo.alchemist.util.Environments.allShortestHopPaths
-import org.danilopianini.symmetricmatrix.MutableDoubleSymmetricMatrix
 import kotlin.Double.Companion.NaN
 import kotlin.Double.Companion.POSITIVE_INFINITY
 import kotlin.math.max
+import org.danilopianini.symmetricmatrix.MutableDoubleSymmetricMatrix
 
 /**
  * Extensions functions of generic environments.
@@ -183,10 +183,8 @@ object Environments {
      */
     fun Environment<*, *>.networkDiameter(): Double = allSubNetworks().singleOrNull()?.diameter ?: NaN
 
-    private data class MutableNetwork<T>(
-        override var diameter: Double,
-        val neighbors: MutableList<Node<T>>
-    ) : Network<T> {
+    private data class MutableNetwork<T>(override var diameter: Double, val neighbors: MutableList<Node<T>>) :
+        Network<T> {
         override val nodes: Set<Node<T>> by lazy { neighbors.toSet() }
     }
 }

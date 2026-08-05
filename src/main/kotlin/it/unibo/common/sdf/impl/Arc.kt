@@ -2,11 +2,11 @@ package it.unibo.common.sdf.impl
 
 import it.unibo.common.pointsDistance
 import it.unibo.common.sdf.SDF
+import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.min
-import kotlin.math.PI
 import kotlin.math.sin
 
 /**

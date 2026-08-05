@@ -22,7 +22,6 @@ inline fun <reified ID> Aggregate<ID>.spreadResource(
         resourceSensor.setCurrentOverallResource(it)
     }
 
-
 /**
  * Given a fixed [resource] value for the root, spreads the available resources to the children of this device,
  * according to the [localSuccess] of each child.
@@ -32,5 +31,4 @@ inline fun <reified ID> Aggregate<ID>.spreadResource(
     potential: Double,
     localSuccess: Double,
     resource: Double,
-): Double where ID : Comparable<ID> =
-    spreadToChildren(potential, if (potential > 0) 0.0 else resource, localSuccess)
+): Double where ID : Comparable<ID> = spreadToChildren(potential, if (potential > 0) 0.0 else resource, localSuccess)

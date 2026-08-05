@@ -17,16 +17,15 @@ context(
     leaderSensor: LeaderSensor,
     resourceSensor: ResourceSensor,
 )
-inline fun <reified ID : Comparable<ID>> Aggregate<ID>.chooseLeader(
-): ID = boundedElection(resourceSensor.getResource(), leaderSensor.leaderRadius)
+inline fun <reified ID : Comparable<ID>> Aggregate<ID>.chooseLeader(): ID =
+    boundedElection(resourceSensor.getResource(), leaderSensor.leaderRadius)
 
 /**
  * Find the potential of the current node.
  */
 context(device: CollektiveDevice<*>)
-inline fun <reified ID: Comparable<ID>> Aggregate<ID>.findPotential(
-    leader: Boolean,
-): Double = distanceTo(leader, with(device) { distances() })
+inline fun <reified ID : Comparable<ID>> Aggregate<ID>.findPotential(leader: Boolean): Double =
+    distanceTo(leader, with(device) { distances() })
 
 /**
  * Check if the current node is the leader.
@@ -36,5 +35,6 @@ context(
     leaderSensor: LeaderSensor,
     resourceSensor: ResourceSensor,
 )
-inline fun <reified ID : Comparable<ID>> Aggregate<ID>.isLeader(
-): Boolean = (chooseLeader() == localId).also { leaderSensor.setLeader(it) }
+inline fun <reified ID : Comparable<ID>> Aggregate<ID>.isLeader(): Boolean = (chooseLeader() == localId).also {
+    leaderSensor.setLeader(it)
+}

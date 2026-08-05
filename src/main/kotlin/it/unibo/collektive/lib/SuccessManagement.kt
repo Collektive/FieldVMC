@@ -20,5 +20,4 @@ inline fun <reified ID> Aggregate<ID>.convergeSuccess(
  * Get the local success of the node.
  */
 context(successSensor: SuccessSensor)
-fun obtainLocalSuccess(): Double =
-    successSensor.getLocalSuccess().also { successSensor.setLocalSuccess(it) }
+fun obtainLocalSuccess(): Double = successSensor.getLocalSuccess().also { successSensor.setLocalSuccess(it) }

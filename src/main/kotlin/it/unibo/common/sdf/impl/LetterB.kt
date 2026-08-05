@@ -10,37 +10,33 @@ import kotlin.math.PI
  * @param height The total height of the letter.
  * @property thickness The thickness of the letter's strokes (default is 0.0).
  */
-class LetterB(
-    start: Pair<Double, Double>,
-    height: Double,
-    private val thickness: Double = 0.0,
-) : SDF {
+class LetterB(start: Pair<Double, Double>, height: Double, private val thickness: Double = 0.0) : SDF {
     private val vertical = Segment(start, Pair(start.first, start.second + height))
     private val lowArc =
         Arc(
-        Pair(start.first + height / QUARTER_DIVISOR, start.second + height / QUARTER_DIVISOR),
-        height / QUARTER_DIVISOR,
-        -PI / HALF_DIVISOR,
-        PI,
-    )
+            Pair(start.first + height / QUARTER_DIVISOR, start.second + height / QUARTER_DIVISOR),
+            height / QUARTER_DIVISOR,
+            -PI / HALF_DIVISOR,
+            PI,
+        )
     private val highArc =
         Arc(
-        Pair(start.first + height / EIGHTH_DIVISOR, start.second + height * THREE_QUARTERS),
-        height / QUARTER_DIVISOR,
-        -PI / HALF_DIVISOR,
-        PI,
-    )
+            Pair(start.first + height / EIGHTH_DIVISOR, start.second + height * THREE_QUARTERS),
+            height / QUARTER_DIVISOR,
+            -PI / HALF_DIVISOR,
+            PI,
+        )
     private val lowSeg = Segment(start, Pair(start.first + height / QUARTER_DIVISOR, start.second))
     private val midSeg =
         Segment(
-        Pair(start.first, start.second + height / HALF_DIVISOR),
-        Pair(start.first + height / QUARTER_DIVISOR, start.second + height / HALF_DIVISOR)
-    )
+            Pair(start.first, start.second + height / HALF_DIVISOR),
+            Pair(start.first + height / QUARTER_DIVISOR, start.second + height / HALF_DIVISOR),
+        )
     private val highSeg =
         Segment(
-        Pair(start.first, start.second + height),
-        Pair(start.first + height / EIGHTH_DIVISOR, start.second + height)
-    )
+            Pair(start.first, start.second + height),
+            Pair(start.first + height / EIGHTH_DIVISOR, start.second + height),
+        )
 
     override fun invoke(p: Pair<Double, Double>): Double =
         minOf(vertical(p), highArc(p), lowArc(p), lowSeg(p), midSeg(p), highSeg(p)) - thickness

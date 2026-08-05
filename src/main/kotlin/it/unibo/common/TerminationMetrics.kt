@@ -18,15 +18,14 @@ class TerminationMetrics : (Environment<*, *>) -> Map<String, Double> {
      * @return A map containing computed metrics such as node count, hub coordinates,
      * density, diameter, and average node degree.
      */
-    override fun invoke(env: Environment<*, *>): Map<String, Double> =
-        env.networkHub().let { (xCoord, yCoord) ->
-            mapOf(
-                "nodes" to env.nodeCount.toDouble(),
-                "network-hub-xCoord" to xCoord,
-                "network-hub-yCoord" to yCoord,
-                "network-density" to env.networkDensity(),
-                "network-diameter" to env.networkDiameterByHopDistance(),
-                "nodes-degree[mean]" to env.nodesDegree().average(),
-            )
-        }
+    override fun invoke(env: Environment<*, *>): Map<String, Double> = env.networkHub().let { (xCoord, yCoord) ->
+        mapOf(
+            "nodes" to env.nodeCount.toDouble(),
+            "network-hub-xCoord" to xCoord,
+            "network-hub-yCoord" to yCoord,
+            "network-density" to env.networkDensity(),
+            "network-diameter" to env.networkDiameterByHopDistance(),
+            "nodes-degree[mean]" to env.nodesDegree().average(),
+        )
+    }
 }

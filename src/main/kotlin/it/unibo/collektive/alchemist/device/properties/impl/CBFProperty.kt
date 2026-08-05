@@ -15,10 +15,8 @@ import it.unibo.common.sdf.SDF
  * @property node The Alchemist node this property is attached to.
  * @param sdf The Signed Distance Field used to compute the safety value.
  */
-class CBFProperty<T>(
-    override val node: Node<T>,
-    private val sdf: SDF,
-) : CBF,
+class CBFProperty<T>(override val node: Node<T>, private val sdf: SDF) :
+    CBF,
     NodeProperty<T> {
     override fun isSafe(position: Position): Double = sdf(position.x to position.y)
 
