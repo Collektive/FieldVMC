@@ -29,13 +29,14 @@ variables:
     60
   range: &range
     formula: cloningRange * 1.01
+  maxSeed: &maxSeed
+    type: SystemEnvVariable
+    parameters: [ "MAX_SEED", 4 ]
   seed: &seed
     min: 0
-    max:
-      formula: System.getenv("MAX_SEED").toDouble()
-      language: kotlin
+    max: *maxSeed
     step: 1
-    default: 0
+    default: 42
 
 network-model:
   type: ConnectWithinDistance

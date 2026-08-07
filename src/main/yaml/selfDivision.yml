@@ -3,13 +3,14 @@ variables:
     "self-division"
   path: &path
     "data/self-division"
+  maxSeed: &maxSeed
+    type: SystemEnvVariable
+    parameters: [ "MAX_SEED", 4 ]
   seed: &seed
     min: 0
-    max:
-      formula: System.getenv("MAX_SEED").toDouble()
-      language: kotlin
+    max: *maxSeed
     step: 1
-    default: 14
+    default: 42
   radius: &leaderRadius
     100.0
   maxResource: &maxResource
