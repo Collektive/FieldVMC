@@ -85,16 +85,15 @@ val runAllOptimizer by tasks.register<DefaultTask>("runAllOptimizer") {
     description = "Launches all experiments with the optimizer enabled"
 }
 
-fun String.capitalizeString(): String =
-    this.replaceFirstChar {
-        if (it.isLowerCase()) {
-            it.titlecase(
-                Locale.getDefault(),
-            )
-        } else {
-            it.toString()
-        }
+fun String.capitalizeString(): String = this.replaceFirstChar {
+    if (it.isLowerCase()) {
+        it.titlecase(
+            Locale.getDefault(),
+        )
+    } else {
+        it.toString()
     }
+}
 
 /*
  * Scan the folder with the simulation files and create a task for each one of them.
@@ -104,10 +103,7 @@ File(rootProject.rootDir.path + "/src/main/yaml")
     ?.filter { it.extension == "yml" }
     ?.sortedBy { it.nameWithoutExtension }
     ?.forEach {
-        fun basetask(
-            name: String,
-            additionalConfiguration: JavaExec.() -> Unit = {},
-        ) = tasks.register<JavaExec>(name) {
+        fun basetask(name: String, additionalConfiguration: JavaExec.() -> Unit = {}) = tasks.register<JavaExec>(name) {
             description = "Launches graphic simulation ${it.nameWithoutExtension}"
             mainClass.set("it.unibo.alchemist.Alchemist")
             classpath = sourceSets["main"].runtimeClasspath
@@ -162,10 +158,12 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                       }
                       
                     terminate: { type: AfterTime, parameters: [1000] }
-                    """.trimIndent(),
+                        """.trimIndent(),
                     )
-                } else if (capitalizedName.endsWith("VMC") && !capitalizedName.startsWith("SelfHealing") && !capitalizedName.startsWith(
-                        "Messages"
+                } else if (capitalizedName.endsWith("VMC") &&
+                    !capitalizedName.startsWith("SelfHealing") &&
+                    !capitalizedName.startsWith(
+                        "Messages",
                     )
                 ) {
                     args(
@@ -192,9 +190,9 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                         batch: ["seed"],
                         autoStart: true,
                     }
-                    """.trimIndent(),
+                        """.trimIndent(),
                     )
-                } else if(capitalizedName.contains("Leader")) {
+                } else if (capitalizedName.contains("Leader")) {
                     args(
                         "--override",
                         """
@@ -206,7 +204,7 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                       }
                       
                       terminate: { type: AfterTime, parameters: [10000] }
-                    """.trimIndent(),
+                        """.trimIndent(),
                     )
                 } else {
                     args(
@@ -218,14 +216,14 @@ File(rootProject.rootDir.path + "/src/main/yaml")
                         batch: ["seed", "initialNodes"],
                         autoStart: true,
                       }
-                    """.trimIndent(),
+                        """.trimIndent(),
                     )
                 }
             }
             runAllBatch.dependsOn(batch)
         }
         if (capitalizedName.endsWith("Optimizer")) {
-            val optimizer by basetask("run${capitalizedName}") {
+            val optimizer by basetask("run$capitalizedName") {
                 setDependsOn(listOf("runSelfConstructionClassicVMCBatch"))
                 group = alchemistGroupOptimizer
                 description = "Launches Nelder Mead parameters optimizer for $capitalizedName"
