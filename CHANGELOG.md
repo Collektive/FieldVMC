@@ -1,3 +1,43 @@
+## 1.0.0 (2026-08-07)
+
+### Features
+
+* introduce Position data class instead of pair ([414b0cb](https://github.com/Collektive/FieldVMC/commit/414b0cba9905f1a94a56cdc4279ae808fcec392f))
+* use context parameters ([7685c6c](https://github.com/Collektive/FieldVMC/commit/7685c6ced9d437ea0d45b0f924f399f47e554253))
+
+### Dependency updates
+
+* **deps:** update foojay-resolver-convention plugin to version 1.0.0 ([1257c1e](https://github.com/Collektive/FieldVMC/commit/1257c1eb26bda1082059ab73b5738214db62d63e))
+* **deps:** update Kotlin and Collektive to latest ([aad54ac](https://github.com/Collektive/FieldVMC/commit/aad54acd0a021769f6445fe047a9d190b3f235b5))
+* **deps:** update kotlin qa to latest ([5966e71](https://github.com/Collektive/FieldVMC/commit/5966e71123e871f61d1c7109a9e4881d267cc23c))
+
+### Bug Fixes
+
+* **ci:** remove max seed definition in check job ([ceff863](https://github.com/Collektive/FieldVMC/commit/ceff863e37719b90dfc9926f955650922f0dd45b))
+* do not use neighbors position from simulator ([12ada1b](https://github.com/Collektive/FieldVMC/commit/12ada1b12cb9c64671103fbbae00c329073736b4))
+* rollback to env var for adding resource info in molecule ([d13589f](https://github.com/Collektive/FieldVMC/commit/d13589f3b92995af61432333f9e0b4a5cff0a1a9))
+* standardize max seed configuration across YAML files ([ebab7e6](https://github.com/Collektive/FieldVMC/commit/ebab7e6a74af45782b6918211e769a2d5055005e))
+* unsafe call ([4da6214](https://github.com/Collektive/FieldVMC/commit/4da621461ada970620ecb87d9ac48890db911b15))
+* use position instead of pair ([a9a6cc7](https://github.com/Collektive/FieldVMC/commit/a9a6cc76681ac346beeed85212d9b439b55a3eba))
+* wrong package alias for effects ([f48c5ae](https://github.com/Collektive/FieldVMC/commit/f48c5ae43d2b14f42308210155979572bf51457c))
+
+### General maintenance
+
+* add editor config ([4780d71](https://github.com/Collektive/FieldVMC/commit/4780d71245aa7606a5be4ed015afe192c91abe94))
+* temporary comment exporters in yaml ([42d230d](https://github.com/Collektive/FieldVMC/commit/42d230d93493a525f31b54082e518b7ad84d5cde))
+
+### Style improvements
+
+* adapt to ktlint ([6d59c60](https://github.com/Collektive/FieldVMC/commit/6d59c604d782b3c7cf59906af6b8e423463a66b6))
+* adapt to ktlint ([064274b](https://github.com/Collektive/FieldVMC/commit/064274b73faf4ad69dc5a42953f75a1a1fb66ed2))
+* run ktlint format ([229fc58](https://github.com/Collektive/FieldVMC/commit/229fc588eaf3f0706cbf17cf475d321152944891))
+* use count instead of filter ([b739377](https://github.com/Collektive/FieldVMC/commit/b73937778daa43d99714f4c7a9da04d2bfcd24e6))
+
+### Refactoring
+
+* create abstract tree effect to remove code duplication ([01bf92c](https://github.com/Collektive/FieldVMC/commit/01bf92ca9946b3c3d2a43cdd61a69b8be9a396ee))
+* move plotters into proper directory ([e5b2e0c](https://github.com/Collektive/FieldVMC/commit/e5b2e0c70d551cc4d0ef818d4b823a40dd32b623))
+
 ## [1.34.8](https://github.com/angelacorte/fieldVMC/compare/1.34.7...1.34.8) (2025-10-15)
 
 ### Dependency updates
