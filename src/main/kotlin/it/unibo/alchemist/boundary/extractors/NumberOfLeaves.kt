@@ -23,9 +23,9 @@ class NumberOfLeaves : Extractor<Double> {
         time: Time,
         step: Long,
     ): Map<String, Double> = environment.nodes.associateWith { node ->
-        environment.getNeighborhood(node).filter { n ->
-            n.getConcentration(SimpleMolecule("parent")) == node.id
-        }.size.toDouble() // if the node has no children, it is a leaf
+        environment.getNeighborhood(node).count { neighbor ->
+            neighbor.getConcentration(SimpleMolecule("parent")) == node.id
+        }.toDouble() // if the node has no children, it is a leaf
     }.filter { it.value == 0.0 }.size.toDouble().let {
         mapOf(NAME to it)
     }

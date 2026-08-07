@@ -36,11 +36,10 @@ constructor(
     ): Map<Node<T>, Double> = environment.nodes.associateWith { node ->
         val neighbors = environment.getNeighborhood(node)
         if (checkChildren) {
-            neighbors
-                .filter { n ->
-                    n.getConcentration(SimpleMolecule("parent")) == node.id ||
-                        node.getConcentration(SimpleMolecule("parent")) == n.id
-                }.size
+            neighbors.count { neighbor ->
+                neighbor.getConcentration(SimpleMolecule("parent")) == node.id ||
+                    node.getConcentration(SimpleMolecule("parent")) == neighbor.id
+            }
         } else {
             neighbors.size()
         }.toDouble()
