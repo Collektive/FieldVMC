@@ -1,3 +1,18 @@
+## [1.0.1](https://github.com/Collektive/FieldVMC/compare/1.0.0...1.0.1) (2026-08-07)
+
+### Dependency updates
+
+* **deps:** update alchemist to v43.0.56 ([#1](https://github.com/Collektive/FieldVMC/issues/1)) ([a2123f0](https://github.com/Collektive/FieldVMC/commit/a2123f0845da84a3bed4f7a56864bd6156d4df49))
+* **deps:** update dependency com.github.ben-manes.caffeine:caffeine to v3.2.4 ([#2](https://github.com/Collektive/FieldVMC/issues/2)) ([433990d](https://github.com/Collektive/FieldVMC/commit/433990d59d04c711ac6401043be56238e9483e59))
+
+### Bug Fixes
+
+* extend base mergify config ([0c74f92](https://github.com/Collektive/FieldVMC/commit/0c74f9283740474ab19a770fe509722b3391f535))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.0.0 [skip ci] ([4d16f3d](https://github.com/Collektive/FieldVMC/commit/4d16f3d43b941ab9b2dca21fcef5cb3a56fe299a))
+
 ## 1.0.0 (2026-08-07)
 
 ### Features
