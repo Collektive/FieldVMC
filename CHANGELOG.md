@@ -1,3 +1,28 @@
+## [1.0.2](https://github.com/Collektive/FieldVMC/compare/1.0.1...1.0.2) (2026-08-21)
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlinx:kotlinx-serialization-core to v1.11.0 ([#11](https://github.com/Collektive/FieldVMC/issues/11)) ([125fac9](https://github.com/Collektive/FieldVMC/commit/125fac911fd9eb07ac1aa92aa12508caddce7e6d))
+* **deps:** update dependency matplotlib to v3.10.9 ([#3](https://github.com/Collektive/FieldVMC/issues/3)) ([0c65133](https://github.com/Collektive/FieldVMC/commit/0c65133f2136287fd1c716fc9c675874679e7c45))
+* **deps:** update dependency matplotlib to v3.11.1 ([#13](https://github.com/Collektive/FieldVMC/issues/13)) ([05f93a3](https://github.com/Collektive/FieldVMC/commit/05f93a33c886a23cf01f8cf0c8bece4084cad059))
+* **deps:** update dependency org.danilopianini:kotlin-symmetric-matrix to v1.1.15 ([#4](https://github.com/Collektive/FieldVMC/issues/4)) ([e5456c1](https://github.com/Collektive/FieldVMC/commit/e5456c13360d3e6f37384ee4f5e331ba7be46506))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.157 ([#5](https://github.com/Collektive/FieldVMC/issues/5)) ([3ec7734](https://github.com/Collektive/FieldVMC/commit/3ec7734bb5db644a7c21a3acdd47009529d2ca37))
+* **deps:** update dependency xarray to v2025.12.0 ([#14](https://github.com/Collektive/FieldVMC/issues/14)) ([65c9b16](https://github.com/Collektive/FieldVMC/commit/65c9b160b7c1767333735991b952ba8c9340e224))
+* **deps:** update node.js to v24 ([#23](https://github.com/Collektive/FieldVMC/issues/23)) ([dd2351e](https://github.com/Collektive/FieldVMC/commit/dd2351eedbcc7bac471a56231d947f41b34dad0f))
+* **deps:** update plugin multijvmtesting to v4 ([#24](https://github.com/Collektive/FieldVMC/issues/24)) ([9c7ce9f](https://github.com/Collektive/FieldVMC/commit/9c7ce9f90f306e6e0b85b0f81e492cab62b1a911))
+* **deps:** update plugin tasktree to v4.0.2 ([#29](https://github.com/Collektive/FieldVMC/issues/29)) ([91f13df](https://github.com/Collektive/FieldVMC/commit/91f13dfcc65ced18e99d50b8b5be55ddcb9381bf))
+* **deps:** update python docker tag to v3.14.7 ([#8](https://github.com/Collektive/FieldVMC/issues/8)) ([62c7c02](https://github.com/Collektive/FieldVMC/commit/62c7c026dd88a3007f69d69707393b695231a67f))
+
+### Build and continuous integration
+
+* **deps:** update actions/checkout action to v7 ([#27](https://github.com/Collektive/FieldVMC/issues/27)) ([1997dce](https://github.com/Collektive/FieldVMC/commit/1997dce979b0bd26caf154de33b83d4605cadb61))
+* **deps:** update actions/setup-node action to v7 ([#28](https://github.com/Collektive/FieldVMC/issues/28)) ([eddbd75](https://github.com/Collektive/FieldVMC/commit/eddbd7570998d9001e0e689a976b64deb3e445d1))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v4.0.43 ([#10](https://github.com/Collektive/FieldVMC/issues/10)) ([e03f199](https://github.com/Collektive/FieldVMC/commit/e03f199c46992df5d93482657c80ebfecf28f31a))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.0.1 [skip ci] ([a66d394](https://github.com/Collektive/FieldVMC/commit/a66d394bfb3a7c8df866a7dff76c01c56e30b228))
+
 ## [1.0.1](https://github.com/Collektive/FieldVMC/compare/1.0.0...1.0.1) (2026-08-07)
 
 ### Dependency updates
