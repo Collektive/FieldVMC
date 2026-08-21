@@ -29,7 +29,7 @@ sourceSets {
             implementation(libs.rrmxmx)
             implementation(libs.symmetric.matrix)
             implementation("com.esotericsoftware:kryo:5.6.2")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.9.0")
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.11.0")
         }
     }
 }
