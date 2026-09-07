@@ -1,3 +1,25 @@
+## [1.0.3](https://github.com/Collektive/FieldVMC/compare/1.0.2...1.0.3) (2026-09-07)
+
+### Dependency updates
+
+* **core-deps:** update kotlin monorepo to v2.4.20 ([#33](https://github.com/Collektive/FieldVMC/issues/33)) ([5e7b9fe](https://github.com/Collektive/FieldVMC/commit/5e7b9fe39cbf560f12c15aa0a03c9bb151afcab4))
+* **deps:** update alchemist to v43.1.5 ([#12](https://github.com/Collektive/FieldVMC/issues/12)) ([43355fd](https://github.com/Collektive/FieldVMC/commit/43355fd0490f27eb07225e54bb47371b61600e25))
+* **deps:** update dependency org.danilopianini:kotlin-symmetric-matrix to v2 ([#20](https://github.com/Collektive/FieldVMC/issues/20)) ([9c0e1a0](https://github.com/Collektive/FieldVMC/commit/9c0e1a0ade0bc144ae3ec88217ff02d59db62609))
+* **deps:** update dependency pandas to v3 ([#21](https://github.com/Collektive/FieldVMC/issues/21)) ([9d4f4fb](https://github.com/Collektive/FieldVMC/commit/9d4f4fba02006d2add46f4fd79cc9c16453e5cc8))
+* **deps:** update dependency xarray to v2026 ([#22](https://github.com/Collektive/FieldVMC/issues/22)) ([0729c56](https://github.com/Collektive/FieldVMC/commit/0729c561c41bacf4004a118e720c9fb596768e46))
+* **deps:** update gradle to v9.7.1 ([#15](https://github.com/Collektive/FieldVMC/issues/15)) ([6cfbe91](https://github.com/Collektive/FieldVMC/commit/6cfbe910f1da9f20a9a457adb6b7961d1547dfb2))
+* **deps:** update node.js to 24.20 ([#32](https://github.com/Collektive/FieldVMC/issues/32)) ([c01e2d9](https://github.com/Collektive/FieldVMC/commit/c01e2d9efdebfd39998fb0b9104e862a84c1be2a))
+* **deps:** update plugin gitsemver to v7.0.23 ([#6](https://github.com/Collektive/FieldVMC/issues/6)) ([4afa390](https://github.com/Collektive/FieldVMC/commit/4afa390f007f270a3500610d172afbda86c96dce))
+* **deps:** update plugin kotlin-qa to v1.9.0 ([#31](https://github.com/Collektive/FieldVMC/issues/31)) ([e322fc8](https://github.com/Collektive/FieldVMC/commit/e322fc81f5909f1c93c4512b6b71bb9f558209fd))
+
+### Build and continuous integration
+
+* **deps:** update danysk/build-check-deploy-gradle-action action to v4.0.44 ([#30](https://github.com/Collektive/FieldVMC/issues/30)) ([2c99ac1](https://github.com/Collektive/FieldVMC/commit/2c99ac18782321339d0ffaefb765c783aa199cae))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.0.2 [skip ci] ([5084148](https://github.com/Collektive/FieldVMC/commit/5084148556883b5730db6370e4a97dca805356c9))
+
 ## [1.0.2](https://github.com/Collektive/FieldVMC/compare/1.0.1...1.0.2) (2026-08-21)
 
 ### Dependency updates
