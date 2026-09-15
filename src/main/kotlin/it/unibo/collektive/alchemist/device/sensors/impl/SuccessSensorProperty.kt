@@ -35,7 +35,8 @@ class SuccessSensorProperty<T, P : Position<P>>(
 
     override fun getSuccess(): Double = node.getConcentration(SimpleMolecule("success")) as Double
 
-    override fun getLocalSuccess(): Double = getFromLayer("successSource") // ?: random.nextDouble(0.0, maxSuccess)
+    override fun getLocalSuccess(): Double =
+        getFromLayer<Double>("successSource") + getFromLayer<Double>("successSource2")
 
     private fun <T> getFromLayer(name: String): T = (
         environment.getLayer(SimpleMolecule(name))?.getValue(environment.getPosition(node))

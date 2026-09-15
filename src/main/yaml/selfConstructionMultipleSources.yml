@@ -1,0 +1,92 @@
+variables:
+  maxSeed: &maxSeed
+    type: SystemEnvVariable
+    parameters: [ "MAX_SEED", 4 ]
+  seed: &seed
+    min: 0
+    max: *maxSeed
+    step: 1
+    default: 42
+  radius: &leaderRadius
+    100.0
+  maxResource: &maxResource
+   100000.0
+  resourceLowerBound: &resourceLowerBound
+    5.0
+  maxChildren: &maxChildren
+    2
+  minSpanWait: &minSpanWait
+    40.0
+  maxSuccess: &maxSuccess
+    10000.0
+  gaussianShape: &gaussianShape
+     5
+  range: &range
+    formula: cloningRange * 1.01
+  cloningRange: &cloningRange
+    formula: 1.2
+
+network-model:
+  type: ConnectWithinDistance
+  parameters: *range
+
+seeds:
+  scenario: *seed
+  simulation: *seed
+
+layers:
+  - type: BidimensionalGaussianLayer
+    parameters: [0, 0, *maxResource, *gaussianShape]
+    molecule: localResource
+  - type: BidimensionalGaussianLayer
+    parameters: [20, 0, *maxResource, *gaussianShape]
+    molecule: localResource2
+  - type: BidimensionalGaussianLayer
+    parameters: [0, 20, *maxSuccess, *gaussianShape]
+    molecule: successSource
+  - type: BidimensionalGaussianLayer
+    parameters: [20, 20, *maxSuccess, *gaussianShape]
+    molecule: successSource2
+
+incarnation: collektive
+
+_pool: &program
+  - time-distribution: 1
+    type: Event
+    actions:
+      - type: RunCollektiveProgram
+        parameters: [it.unibo.collektive.vmc.VMCSpawningKt.withSpawning]
+
+deployments:
+  - type: Point
+    parameters: [ 0, 7]
+    programs:
+      - *program
+    properties:
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LayerProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.SuccessSensorProperty
+        parameters: [ *maxSuccess ]
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LeaderSensorProperty
+        parameters: [ *leaderRadius ]
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
+        parameters: [ *resourceLowerBound, *maxResource ]
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.DeviceSpawner
+        parameters: [ *cloningRange, *maxChildren, *minSpanWait ]
+  - type: Point
+    parameters: [ 10, 7]
+    programs:
+      - *program
+    properties:
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LayerProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.SuccessSensorProperty
+        parameters: [ *maxSuccess ]
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LeaderSensorProperty
+        parameters: [ *leaderRadius ]
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
+        parameters: [ *resourceLowerBound, *maxResource ]
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.DeviceSpawner
+        parameters: [ *cloningRange, *maxChildren, *minSpanWait ]

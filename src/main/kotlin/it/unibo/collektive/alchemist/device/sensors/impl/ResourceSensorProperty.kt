@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package it.unibo.collektive.alchemist.device.sensors.impl
 
 import it.unibo.alchemist.model.Environment
@@ -27,11 +29,12 @@ class ResourceSensorProperty<T, P : Position<P>>(
     override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> =
         ResourceSensorProperty(environment, node, resourceLowerBound, maxResource)
 
-    override fun getResource(): Double =
-        when (val layerValue = environment.getLayer(localResource)?.getValue(environment.getPosition(node))) {
-            is Number -> layerValue.toDouble()
-            else -> error("ResourceSensorProperty: $layerValue is not a number")
-        }
+    override fun getResource(): Double = getFromLayer<Double>("localResource") + getFromLayer<Double>("localResource2")
+
+    private fun <T> getFromLayer(name: String): T = (
+        environment.getLayer(SimpleMolecule(name))?.getValue(environment.getPosition(node))
+            ?: IllegalStateException("Layer $name not found")
+        ) as T
 
     @Suppress("UNCHECKED_CAST")
     override fun setCurrentOverallResource(resource: Double) = node.setConcentration(resourceMolecule, resource as T)
