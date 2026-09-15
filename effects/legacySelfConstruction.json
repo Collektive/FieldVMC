@@ -7,11 +7,11 @@
       "val": 200
     },
     "minLayerValue": "0.1",
-    "maxLayerValue": "100000000.0",
+    "maxLayerValue": "10000.0",
     "minLayerValueCached": "0.1",
-    "maxLayerValueCached": "100000000.0",
+    "maxLayerValueCached": "10000.0",
     "minLayerValueDouble": 0.1,
-    "maxLayerValueDouble": 200000000.0,
+    "maxLayerValueDouble": 10000.0,
     "mapper": {
       "type": "class it.unibo.alchemist.boundary.gui.effects.BidimensionalGaussianLayersMapper",
       "minAndMaxToBeSet": false
@@ -51,11 +51,11 @@
       "val": 200
     },
     "minLayerValue": "0.1",
-    "maxLayerValue": "100000000.0",
+    "maxLayerValue": "10000.0",
     "minLayerValueCached": "0.1",
-    "maxLayerValueCached": "100000000.0",
+    "maxLayerValueCached": "10000.0",
     "minLayerValueDouble": 0.1,
-    "maxLayerValueDouble": 200000000.0,
+    "maxLayerValueDouble": 10000.0,
     "mapper": {
       "type": "class it.unibo.alchemist.boundary.gui.effects.BidimensionalGaussianLayersMapper",
       "minAndMaxToBeSet": false
@@ -83,7 +83,7 @@
       "val": 255
     },
     "colorCache": {
-      "value": -65536
+      "value": -16722177
     },
     "markerNodeID": 0
   },

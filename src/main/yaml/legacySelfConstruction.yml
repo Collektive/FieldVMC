@@ -10,7 +10,7 @@ variables:
   radius: &leaderRadius
     100.0
   maxResource: &maxResource
-   100000000.0
+   10000.0
   resourceLowerBound: &resourceLowerBound
     5.0
   maxChildren: &maxChildren
@@ -32,10 +32,6 @@ variables:
   cloningRange: &cloningRange
     formula: 1.2
 
-  sdf: &sdf
-    formula: |
-      it.unibo.common.sdf.inverseSDF(it.unibo.common.sdf.impl.Star(it.unibo.collektive.model.Position(0.0, 10.0), 7.0, 5, 2.5, true, 1.0))
-    language: kotlin
 network-model:
   type: ConnectWithinDistance
   parameters: *range
@@ -78,5 +74,3 @@ deployments:
         parameters: [ *resourceLowerBound, *maxResource ]
       - type: it.unibo.collektive.alchemist.device.sensors.impl.DeviceSpawner
         parameters: [ *cloningRange, *maxChildren, *minSpanWait ]
-      - type: it.unibo.collektive.alchemist.device.properties.impl.CBFProperty
-        parameters: [ *sdf ]
