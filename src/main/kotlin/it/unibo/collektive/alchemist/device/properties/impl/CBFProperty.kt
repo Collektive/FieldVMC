@@ -9,7 +9,8 @@ import it.unibo.common.sdf.SDF
 /**
  * An Alchemist [NodeProperty] that provides Control Barrier Function (CBF) capabilities.
  *
- * It evaluates the safety of a given point using a Signed Distance Field (SDF).
+ * It evaluates the safety of a given point using a Signed Distance Field (SDF),
+ * whose value is positive for the points belonging to the safe space.
  *
  * @param T The concentration type of the node.
  * @property node The Alchemist node this property is attached to.
@@ -18,7 +19,7 @@ import it.unibo.common.sdf.SDF
 class CBFProperty<T>(override val node: Node<T>, private val sdf: SDF) :
     CBF,
     NodeProperty<T> {
-    override fun isSafe(position: Position): Double = sdf(position)
+    override fun safetyMargin(position: Position): Double = sdf(position)
 
     override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> = CBFProperty(node, sdf)
 }

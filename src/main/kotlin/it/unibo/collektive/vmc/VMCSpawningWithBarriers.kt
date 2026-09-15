@@ -79,7 +79,7 @@ fun Aggregate<Int>.spawnAndDestroyAfterStabilityWithBarriers(): Double =
                 localPosition,
                 neighborPositions,
                 localStability,
-                cbf::isSafe,
+                cbf,
             )
         }
     }

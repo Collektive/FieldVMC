@@ -3,6 +3,7 @@
 package it.unibo.collektive.utils
 
 import it.unibo.collektive.aggregate.api.Aggregate
+import it.unibo.collektive.alchemist.device.properties.CBF
 import it.unibo.collektive.alchemist.device.sensors.DeviceSpawn
 import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import it.unibo.collektive.alchemist.device.sensors.ResourceSensor
@@ -17,13 +18,13 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 /**
- * Type alias for a function that spawns devices in an aggregate given some parameters:
- * - [devSpawn] the device spawn sensor;
- * - [locationSensor] the location sensor;
+ * Type alias for a function applying the spawning and destruction policies of a node, given:
  * - [potential] the potential of the node;
  * - [localSuccess] the local success of the node;
  * - [success] the global success of the node;
  * - [localResource] the local resources of the node.
+ *
+ * The sensors needed to perform the spawning are taken from the context.
  */
 typealias Spawner<ID> = Aggregate<ID>.(
     potential: Double,
@@ -41,25 +42,29 @@ typealias Spawner<ID> = Aggregate<ID>.(
 data class Stability(val spawnStable: Boolean = false, val destroyStable: Boolean = false) : Serializable {
 
     /**
+     * Whether this state is stable both for spawning and for destruction.
+     */
+    val isStable: Boolean get() = spawnStable && destroyStable
+
+    /**
+     * Combines this stability state with [other], keeping each flag as stable only if both states are.
+     */
+    infix fun and(other: Stability): Stability =
+        Stability(spawnStable && other.spawnStable, destroyStable && other.destroyStable)
+
+    /**
      * Companion object containing the serialization version UID.
      */
     companion object {
         private const val serialVersionUID: Long = 1L
     }
-
-    /**
-     * Combines this stability state with another one using a logical AND.
-     *
-     * @param other The other stability state to combine with.
-     * @return True if both states are completely stable for both spawning and destruction.
-     */
-    infix fun and(other: Stability): Boolean = spawnStable && other.spawnStable && destroyStable && other.destroyStable
 }
 
 /**
  * The policies that determine if a node should be spawned or destroyed.
  * The node is spawned if the local resources are above the lower-bound threshold,
- * if it has less than a maximum threshold of children and the neighborhood is stable.
+ * if it has less than a maximum threshold of children and the neighborhood is stable;
+ * the destination of the new node is picked inside the safe space described by [barrier].
  * The node is destroyed if the local resources are below the lower bound,
  * if it is not father of any node and the neighborhood is stable.
  */
@@ -77,24 +82,24 @@ fun determineStability(
     localPosition: Position,
     neighborPositions: List<Position>,
     localStability: Stability,
-    safeSpaceChecker: (Position) -> Double,
+    barrier: CBF,
 ): Stability {
-    val enoughTime = now > lastChanged + devSpawn.minSpawnWait
-    val everyoneIsDestroyStable = now > lastChanged
-    val everyoneIsStable = localStability.spawnStable && localStability.destroyStable && enoughTime
+    val waitedLongEnough = now > lastChanged + devSpawn.minSpawnWait
+    val unchangedSinceLastRound = now > lastChanged
+    val readyToSpawn = localStability.isStable && waitedLongEnough
 
     val shouldDestroy =
         potential > 0.0 &&
             childrenCount == 0 &&
             localResource < resourceSensor.resourceLowerBound &&
-            everyoneIsDestroyStable
+            unchangedSinceLastRound
 
     val shouldSpawn =
         neighborPositions.isEmpty() ||
             (
                 localResource / (2 + childrenCount) > resourceSensor.resourceLowerBound &&
                     childrenCount < devSpawn.maxChildren &&
-                    everyoneIsStable
+                    readyToSpawn
                 )
 
     return when {
@@ -106,10 +111,10 @@ fun determineStability(
             localPosition,
             neighborPositions,
             localStability,
-            safeSpaceChecker,
+            barrier,
         )
 
-        else -> Stability(spawnStable = enoughTime, destroyStable = everyoneIsDestroyStable)
+        else -> Stability(spawnStable = waitedLongEnough, destroyStable = unchangedSinceLastRound)
     }
 }
 
@@ -121,12 +126,12 @@ private fun executeSpawnLogic(
     localPosition: Position,
     neighborPositions: List<Position>,
     localStability: Stability,
-    safeSpaceChecker: (Position) -> Double,
+    barrier: CBF,
 ): Stability {
     val safeSectors = findSafeSectors(devSpawn.cloningRange) { angle ->
         val x = devSpawn.cloningRange * cos(angle)
         val y = devSpawn.cloningRange * sin(angle)
-        safeSpaceChecker(localPosition + Position(x, y))
+        barrier.safetyMargin(localPosition + Position(x, y))
     }
     val relativePositions = neighborPositions.map { it - localPosition }
     val angles = relativePositions.map { atan2(it.y, it.x) }.sorted()
