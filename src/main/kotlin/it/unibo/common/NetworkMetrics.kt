@@ -51,10 +51,10 @@ object NetworkMetrics {
      * The network hub coordinates.
      * The x and y coordinates are the average of the x and y coordinates of the nodes in the network.
      */
-    fun <T> Environment<T, *>.networkHub(): Pair<Double, Double> = fold(0.0 to 0.0) { acc, next ->
-        val nodePos = this.getPosition(next).coordinates.map { it + 10 } // Add 10 to avoid negative positions
-        acc.first + nodePos[0] to acc.second + nodePos[1]
-    }.let { sum ->
-        sum.first / this.nodeCount to sum.second / this.nodeCount
+    fun <T> Environment<T, *>.networkHub(): Pair<Double, Double> = fold(0.0 to 0.0) { accumulator, node ->
+        val (x, y) = getPosition(node).coordinates
+        accumulator.first + x to accumulator.second + y
+    }.let { (sumOfX, sumOfY) ->
+        sumOfX / nodeCount to sumOfY / nodeCount
     }
 }
