@@ -52,7 +52,7 @@ _pool: &program
     type: Event
     actions:
       - type: RunCollektiveProgram
-        parameters: [it.unibo.collektive.vmc.FieldVMCFixedLeaderKt.fixedRootStability]
+        parameters: [it.unibo.collektive.vmc.FieldVMCFixedLeaderKt.fixedRootWithSpawning]
 
 terminate: { type: AfterTime, parameters: [200] }
 

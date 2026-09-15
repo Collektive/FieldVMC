@@ -17,21 +17,22 @@ import it.unibo.collektive.utils.SpawnerNoStability
 import it.unibo.collektive.utils.determineSpawn
 
 /**
- * Entrypoint of the VMC algorithm, using spawning and destroying after stability policies.
+ * Entrypoint of the VMC algorithm with a fixed root, using the spawning policy only:
+ * no stability of the neighborhood is required before spawning, and nodes are never destroyed.
  */
 fun Aggregate<Int>.fixedRootWithSpawning(
-    devSpawn: DeviceSpawn,
     device: CollektiveDevice<*>,
+    devSpawn: DeviceSpawn,
     locationS: LocationSensor,
     random: RandomGenerator,
     resourceS: ResourceSensor,
     successS: SuccessSensor,
 ): Double = context(device, locationS, random, resourceS, successS, devSpawn) {
-    fixedRootStability()
+    fixedRootSpawning()
 }
 
 /**
- * Executes the VMC algorithm with a fixed root, incorporating stability checks for spawning.
+ * Executes the VMC algorithm with a fixed root, spawning new nodes as soon as the resources allow it.
  */
 context(
     device: CollektiveDevice<*>,
@@ -41,13 +42,14 @@ context(
     successS: SuccessSensor,
     devSpawn: DeviceSpawn,
 )
-fun Aggregate<Int>.fixedRootStability(): Double = vmcFixedLeader { potential, localSuccess, success, localResource ->
+fun Aggregate<Int>.fixedRootSpawning(): Double = vmcFixedLeader { potential, localSuccess, success, localResource ->
     val (childrenCount, localPosition, neighborPositions) = extractNeighborhoodPositions(potential)
     determineSpawn(childrenCount, localResource, localPosition, neighborPositions)
 }
 
 /**
- * Core execution logic of the VMC algorithm with a fixed leader.
+ * Core execution logic of the VMC algorithm with a fixed leader:
+ * the root is the node whose `leader` molecule is set in the environment, and no election is performed.
  */
 context(
     device: CollektiveDevice<*>,

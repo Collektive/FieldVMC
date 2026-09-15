@@ -58,7 +58,7 @@ _pool: &program
     type: Event
     actions:
       - type: RunCollektiveProgram
-        parameters: [it.unibo.collektive.vmc.FieldVMCFixedLeaderKt.fixedRootStability]
+        parameters: [it.unibo.collektive.vmc.FieldVMCFixedLeaderKt.fixedRootWithSpawning]
   - time-distribution:
       type: Trigger
       parameters: [ 500 ]
