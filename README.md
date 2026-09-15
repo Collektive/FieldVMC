@@ -114,6 +114,9 @@ the resource (resp. success) distribution flows, the thicker they are, the more 
 
 The experiments are:
 - _legacySelfConstruction_: self-construction from a single node (growth from seed),
+- _selfConstructionWithBarriers_: same as the previous one, but the growth is constrained by barriers:
+  nodes may only spawn inside the safe region described by a Signed Distance Field
+  (a five-pointed star, in the provided configuration),
 - _selfDivision_: self-division after disruption (network segmentation) with no regeneration (cutting). 
    The segmentation is performed by removing a part of the structure after 500 simulated seconds, and the nodes are not able to regenerate the missing part;
 - _selfIntegration_: self-integration of multiple FieldVMC systems (grafting).
@@ -220,6 +223,7 @@ Depending on the platform, there may be different ways to set the environment va
 
 The corresponding YAML simulation files to the experiments cited above are the following:
 - _legacySelfConstruction_: self-construction from a single node (growth from seed) ```MAX_SEED=0 ./gradlew runLegacySelfConstructionGraphic```,
+- _selfConstructionWithBarriers_: self-construction constrained by barriers ```MAX_SEED=0 ./gradlew runSelfConstructionWithBarriersGraphic```,
 - _selfDivision_: self-division after disruption (network segmentation) with no regeneration (cutting) ```MAX_SEED=0 ./gradlew runselfDivisionGraphic```, 
 - _selfIntegration_: self-integration of multiple FieldVMC systems (grafting) ```MAX_SEED=0 ./gradlew runSelfIntegrationGraphic```,
 - _selfSegmentation_: self-segmentation of a larger structure (budding) ```MAX_SEED=0 ./gradlew runSelfSegmentationGraphic```, and
@@ -286,8 +290,8 @@ fieldVMC/
 ```
 
 #### Simulation entrypoint
-The simulations in which nodes are able to spawn new nodes and destroy them are the _legacySelfConstruction_ and _selfOptimization_ experiments.
-Their entrypoint can be found at `src/main/kotlin/it/unibo/collektive/vmc/VMCSpawning.kt`. 
+The simulations in which nodes are able to spawn new nodes and destroy them are the _legacySelfConstruction_, _selfOptimization_ and _selfConstructionWithBarriers_ experiments.
+The entrypoint of the first two, in which the space is unconstrained, can be found at `src/main/kotlin/it/unibo/collektive/vmc/VMCSpawning.kt`. 
 The program takes as input the aggregate function `withSpawning()`, which uses a function that implements the spawning (and killing) logic.\
 Shortly, a node can spawn if:
 - it has enough resources to spawn a new node and remain alive;
@@ -300,6 +304,13 @@ Similarly, a node can die if:
 - it has no children;
 - it has been stable for at least the minimum time required.
 
+The _selfConstructionWithBarriers_ experiment relies on the very same spawning and destruction policies,
+but constrains them with a Control Barrier Function:
+its entrypoint is `withSpawningWithBarriers()`, at `src/main/kotlin/it/unibo/collektive/vmc/VMCSpawningWithBarriers.kt`.
+Nodes are equipped with a `CBFProperty`, evaluating a Signed Distance Field which describes the region of
+space the structure is allowed to occupy; a new node is therefore only spawned along the portion of the
+cloning circumference lying inside such a region.
+
 The simulations that do not involve the spawning of new nodes are the _selfDivision_, _selfIntegration_, and _selfSegmentation_ experiments.
 Their entrypoint can be found at `src/main/kotlin/it/unibo/collektive/vmc/VMCWithoutSpawning.kt`.
 It simply uses aggregate functions to elect leaders and manage the resource and success distribution.
@@ -309,19 +320,20 @@ The entrypoint for the *FieldVMC* approach can be found at `src/main/kotlin/it/u
 in which the leader is fixed (there is no leader election) and all nodes are able to spawn new ones.
 
 ### Experiments features recap
-|         **Experiment**          |           **YAML file**           | **Spawning** | **Destruction** | **Forced cutting** | **Forced union** | 
-|:-------------------------------:|:---------------------------------:|:------------:|:---------------:|:------------------:|:----------------:| 
-|   _legacy Self-construction_    |   `legacySelfConstruction.yaml`   |     Yes      |       Yes       |         No         |        No        |
-|         _Self-division_         |        `selfDivision.yaml`        |      No      |       No        |        Yes         |        No        |
-|       _Self-integration_        |      `selfIntegration.yaml`       |      No      |       No        |         No         |       Yes        |
-|       _Self-segmentation_       |      `selfSegmentation.yaml`      |      No      |       No        |         No         |       Yes        |
-|       _Self-optimization_       |      `selfOptimization.yaml`      |     Yes      |       Yes       |         No         |        No        |
-| _Self-construction Classic VMC_ | `selfConstructionClassicVMC.yaml` |     Yes      |       No        |         No         |        No        |
-|   _Self-healing Classic VMC_    |   `selfHealingClassicVMC.yaml`    |     Yes      |       No        |        Yes         |        No        |
-|  _Self-construction Field VMC_  |  `selfConstructionFieldVMC.yaml`  |     Yes      |       No        |         No         |        No        |
-|    _Self-healing Field VMC_     |    `selfHealingFieldVMC.yaml`     |     Yes      |       No        |        Yes         |        No        |
-| _Self-construction Field VMC Optimizer_ | `selfConstructionFieldVMCOptimizer.yaml` | Yes |       No        | No | No |
-| _Self-optimization Leader Election_ | `selfOptimizationLeaderElection.yaml` | Yes |       Yes       | No | No |
+|         **Experiment**          |           **YAML file**           | **Spawning** | **Destruction** | **Barriers** | **Forced cutting** | **Forced union** | 
+|:-------------------------------:|:---------------------------------:|:------------:|:---------------:|:------------:|:------------------:|:----------------:| 
+|   _legacy Self-construction_    |   `legacySelfConstruction.yaml`   |     Yes      |       Yes       |      No      |         No         |        No        |
+| _Self-construction with barriers_ | `selfConstructionWithBarriers.yaml` |     Yes      |       Yes       |     Yes      |         No         |        No        |
+|         _Self-division_         |        `selfDivision.yaml`        |      No      |       No        |      No      |        Yes         |        No        |
+|       _Self-integration_        |      `selfIntegration.yaml`       |      No      |       No        |      No      |         No         |       Yes        |
+|       _Self-segmentation_       |      `selfSegmentation.yaml`      |      No      |       No        |      No      |         No         |       Yes        |
+|       _Self-optimization_       |      `selfOptimization.yaml`      |     Yes      |       Yes       |      No      |         No         |        No        |
+| _Self-construction Classic VMC_ | `selfConstructionClassicVMC.yaml` |     Yes      |       No        |      No      |         No         |        No        |
+|   _Self-healing Classic VMC_    |   `selfHealingClassicVMC.yaml`    |     Yes      |       No        |      No      |        Yes         |        No        |
+|  _Self-construction Field VMC_  |  `selfConstructionFieldVMC.yaml`  |     Yes      |       No        |      No      |         No         |        No        |
+|    _Self-healing Field VMC_     |    `selfHealingFieldVMC.yaml`     |     Yes      |       No        |      No      |        Yes         |        No        |
+| _Self-construction Field VMC Optimizer_ | `selfConstructionFieldVMCOptimizer.yaml` | Yes |       No        |      No      | No | No |
+| _Self-optimization Leader Election_ | `selfOptimizationLeaderElection.yaml` | Yes |       Yes       |      No      | No | No |
 
 
 ### Reproduce the experiment results
