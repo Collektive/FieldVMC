@@ -1,3 +1,30 @@
+## [1.1.0](https://github.com/Collektive/FieldVMC/compare/1.0.3...1.1.0) (2026-09-15)
+
+### Features
+
+* add VMC with barriers entrypoint ([f124007](https://github.com/Collektive/FieldVMC/commit/f124007c7722d9fc143bf141a6e59694849d4fee))
+* restore baseline VMC with spawning and destruction without barriers ([8505e28](https://github.com/Collektive/FieldVMC/commit/8505e2875fb669eb1392f6cdbca0027dda581d32))
+
+### Dependency updates
+
+* **deps:** update dependency matplotlib to v3.11.2 ([#40](https://github.com/Collektive/FieldVMC/issues/40)) ([9ed96ce](https://github.com/Collektive/FieldVMC/commit/9ed96ce27146e13b0bb6e8ea47f5185db5edc779))
+* **deps:** update dependency org.danilopianini:kotlin-symmetric-matrix to v2.0.2 ([#35](https://github.com/Collektive/FieldVMC/issues/35)) ([c00d441](https://github.com/Collektive/FieldVMC/commit/c00d4411f84c694c6fbe1d19e9a759bf30b8c005))
+* **deps:** update node.js to 24.21 ([#38](https://github.com/Collektive/FieldVMC/issues/38)) ([f6df5e6](https://github.com/Collektive/FieldVMC/commit/f6df5e63bddc1e3b765f28e9fcac4443540ee905))
+* **deps:** update plugin gitsemver to v7.0.24 ([#34](https://github.com/Collektive/FieldVMC/issues/34)) ([05b70b4](https://github.com/Collektive/FieldVMC/commit/05b70b4e67b0956527cb63981234215bbb5f2283))
+* **deps:** update plugin kotlin-qa to v1.9.2 ([#36](https://github.com/Collektive/FieldVMC/issues/36)) ([9ea883c](https://github.com/Collektive/FieldVMC/commit/9ea883c2883eb198bf70513e2a9dd11ce6c9e1c5))
+* **deps:** update plugin multijvmtesting to v4.5.7 ([#39](https://github.com/Collektive/FieldVMC/issues/39)) ([ee88913](https://github.com/Collektive/FieldVMC/commit/ee8891327055d87e02d75d824b3e2dfcb6aa3c2a))
+
+### Build and continuous integration
+
+* **deps:** update danysk/build-check-deploy-gradle-action action to v4.0.45 ([#37](https://github.com/Collektive/FieldVMC/issues/37)) ([33c6845](https://github.com/Collektive/FieldVMC/commit/33c6845995bf9deb55bc1d637872d1a1d78fde55))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v4.0.46 ([#41](https://github.com/Collektive/FieldVMC/issues/41)) ([4daf465](https://github.com/Collektive/FieldVMC/commit/4daf465b9237670cd8958d8cb38cbb2652b00434))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.0.3 [skip ci] ([76f0cfd](https://github.com/Collektive/FieldVMC/commit/76f0cfd3bf1c6a697f590cfb46c57090b933972e))
+* update gitignore ([d7d8467](https://github.com/Collektive/FieldVMC/commit/d7d84670493117a2be0071f2808965ca316fe3ab))
+* update readme ([bf4831b](https://github.com/Collektive/FieldVMC/commit/bf4831bb50961f47c740294d46d2a5ec5b38df9b))
+
 ## [1.0.3](https://github.com/Collektive/FieldVMC/compare/1.0.2...1.0.3) (2026-09-07)
 
 ### Dependency updates
