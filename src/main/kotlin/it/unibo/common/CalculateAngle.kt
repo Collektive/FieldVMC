@@ -41,12 +41,12 @@ fun calculateAngle(
 
     val differences =
         when {
-            angles.isEmpty() -> listOf(AngularSector(0.0, 2 * PI))
+            angles.isEmpty() -> listOf(AngularSector.fullCircle)
             angles.size == 1 -> listOf(AngularSector(angles.first(), 2 * PI))
             else -> {
                 val sortedAngles = angles.sorted()
-                val fullCircle = sortedAngles + (sortedAngles.first() + 2 * PI)
-                fullCircle
+                val wrappedAngles = sortedAngles + (sortedAngles.first() + 2 * PI)
+                wrappedAngles
                     .zipWithNext { a, b -> AngularSector(a, b - a) }
                     .filter { it.arc >= minArc }
             }
@@ -61,7 +61,7 @@ fun calculateAngle(
             val start = maxOf(diff.from, safe.from)
             val end = minOf(diff.from + diff.arc, safe.from + safe.arc)
 
-            if (start < end) { // Se c'è sovrapposizione
+            if (start < end) { // i.e. the two sectors do overlap
                 rawIntersections.add(AngularSector(start, end - start))
             }
         }
@@ -69,7 +69,7 @@ fun calculateAngle(
 
     val intersection = rawIntersections.sortedBy { it.from }
 
-    val validIntersections = if (angles.isNotEmpty() && angles.minOf { it } != 0.0) {
+    val validIntersections = if (angles.isNotEmpty() && angles.min() != 0.0) {
         wrapSectors(intersection)
     } else {
         intersection

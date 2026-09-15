@@ -7,23 +7,23 @@ import kotlin.math.sign
 
 /**
  * The minimum distance threshold used to calculate the next angular step.
- * If the computed distance to the boundary falls below this value, [MIN] is used
+ * If the computed distance to the boundary falls below this value, [MIN_DISTANCE] is used
  * instead to prevent the algorithm from taking excessively small steps when
  * approaching an intersection.
  */
-const val MIN = 1e-7
+private const val MIN_DISTANCE = 1e-7
 
 /**
  * The tolerance threshold for the bisection algorithm.
  * The search stops when the search interval is smaller than this value.
  */
-const val TOLERANCE = 1e-10
+private const val TOLERANCE = 1e-10
 
 /**
  * A scaling factor applied to the distance from the boundary.
  * Used to compensate for minor calculation inaccuracies or Signed Distance Field (SDF) approximations.
  */
-const val IMPRECISION = 0.95
+private const val IMPRECISION = 0.95
 
 /**
  * Finds the angles at which a circumference of radius [r] intersects a boundary.
@@ -33,7 +33,7 @@ const val IMPRECISION = 0.95
  *
  * Note: Tangency points are not detected unless the sample falls exactly on them,
  * because there is no sign change. Furthermore, if two zero-crossings are closer
- * to each other than [MIN], they might be skipped and not detected.
+ * to each other than [MIN_DISTANCE], they might be skipped and not detected.
 */
 fun findZeros(r: Double, validator: (Double) -> Double): List<Double> {
     val zeros = mutableListOf<Double>()
@@ -58,7 +58,10 @@ fun findZeros(r: Double, validator: (Double) -> Double): List<Double> {
             if (d == 0.0) {
                 zeros.add(angle)
             }
-            val delta = if (d < MIN) 2 * asin(MIN / (2 * r)) else 2 * asin((d) / (2 * r))
+            val delta = when {
+                d < MIN_DISTANCE -> 2 * asin(MIN_DISTANCE / (2 * r))
+                else -> 2 * asin(d / (2 * r))
+            }
             angle += delta
         }
     }

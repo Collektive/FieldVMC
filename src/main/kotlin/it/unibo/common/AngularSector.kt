@@ -1,5 +1,7 @@
 package it.unibo.common
 
+import kotlin.math.PI
+
 /**
  * Represents an angular sector defined by a starting angle and an arc length.
  *
@@ -8,9 +10,20 @@ package it.unibo.common
  */
 data class AngularSector(val from: Double, val arc: Double) : Comparable<AngularSector> {
     /**
-     * Compares this angle with another based on the arc length first, then the starting angle.
+     * Compares this sector with another one based on the starting angle first, then on the arc length,
+     * so that a sorted list of sectors follows the circumference counterclockwise.
      */
-    override fun compareTo(other: AngularSector): Int = compareBy(AngularSector::arc)
-        .thenBy(AngularSector::from)
+    override fun compareTo(other: AngularSector): Int = compareBy(AngularSector::from)
+        .thenBy(AngularSector::arc)
         .compare(this, other)
+
+    /**
+     * Commonly used angular sectors.
+     */
+    companion object {
+        /**
+         * The sector spanning the whole circumference, i.e. the absence of any angular constraint.
+         */
+        val fullCircle = AngularSector(0.0, 2 * PI)
+    }
 }

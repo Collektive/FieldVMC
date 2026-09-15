@@ -4,9 +4,9 @@ import kotlin.math.PI
 import kotlin.math.abs
 
 /**
- * A small constant used as a tolerance threshold for floating-point comparisons.
+ * A small constant used as a tolerance threshold for floating-point comparisons between angles.
  */
-const val EPSILON = 1e-8
+private const val EPSILON = 1e-8
 
 /**
  * Given an ordered list [sectors]

@@ -12,7 +12,7 @@ fun findSafeSectors(r: Double, validator: (Double) -> Double): List<AngularSecto
     val zeros = findZeros(r, validator).sorted()
 
     if (zeros.isEmpty()) {
-        val fullCircle = AngularSector(0.0, 2 * PI)
+        val fullCircle = AngularSector.fullCircle
         return if (isSectorSafe(fullCircle, validator)) listOf(fullCircle) else emptyList()
     }
 
