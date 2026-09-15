@@ -21,7 +21,7 @@ internal inline fun <reified ID : Comparable<ID>> Aggregate<ID>.findDisambiguate
         when (disambiguateParent(id1, id2)) {
             id1 -> -1
             id2 -> 1
-            else -> error("Impossible to disambiguate parent $id2 and $id1")
+            else -> error("Impossible to disambiguate parent $id1 and $id2")
         }
     },
 )
@@ -44,20 +44,20 @@ inline fun <reified T, reified ID> Aggregate<ID>.convergeCast(
         when (disambiguateParent(id1, id2)) {
             id1 -> -1
             id2 -> 1
-            else -> error("Impossible to disambiguate parent $id2 and $id1")
+            else -> error("Impossible to disambiguate parent $id1 and $id2")
         }
     },
     accumulateData = reduce,
 )
 
 /**
- * Spreads the [localResource] to the children of this node, according to the [localSuccess] of each child.
+ * Spreads the [localResource] to the children of this node, proportionally to the [success] of each child.
  */
 context(envVar: EnvironmentVariables)
 inline fun <reified ID> Aggregate<ID>.spreadToChildren(
     potential: Double,
     localResource: Double,
-    localSuccess: Double,
+    success: Double,
     noinline disambiguateParent: (ID, ID) -> ID = { a, b -> minOf(a, b) },
 ): Double where ID : Comparable<ID> = exchanging(localResource) { resource ->
     val parent = findDisambiguatedParent(potential, disambiguateParent) // the parent of this device
@@ -73,7 +73,7 @@ inline fun <reified ID> Aggregate<ID>.spreadToChildren(
     val neighborParents = neighboring(parent) // Each device is mapped to its parent
     val childrenSuccess: Field<ID, Double> =
         neighborParents
-            .alignedMap(neighboring(localSuccess)) { _, itsParent, itsSuccess ->
+            .alignedMap(neighboring(success)) { _, itsParent, itsSuccess ->
                 when {
                     itsParent == localId -> itsSuccess
                     else -> 0.0
