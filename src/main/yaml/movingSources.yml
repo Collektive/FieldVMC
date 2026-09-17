@@ -1,0 +1,112 @@
+variables:
+  maxSeed: &maxSeed
+    type: SystemEnvVariable
+    parameters: [ "MAX_SEED", 4 ]
+  seed: &seed
+    min: 0
+    max: *maxSeed
+    step: 1
+    default: 42
+  radius: &leaderRadius
+    100.0
+  maxResource: &maxResource
+   100000.0
+  resourceLowerBound: &resourceLowerBound
+    5.0
+  maxChildren: &maxChildren
+    3
+  minSpanWait: &minSpanWait
+    40.0
+  successX: &successX
+    15
+  successY: &successY
+    50
+  maxSuccess: &maxSuccess
+    formula: *maxResource
+  gaussianShape: &gaussianShape
+     5
+  range: &range
+    formula: cloningRange * 1.01
+  cloningRange: &cloningRange
+    formula: 1.2
+  resourceMoveTime: &resourceMoveTime
+    10000.0
+  resource2OffTime: &resource2OffTime
+    15000.0
+  resource2MoveTime: &resource2MoveTime
+    30000.0
+
+network-model:
+  type: ConnectWithinDistance
+  parameters: *range
+
+seeds:
+  scenario: *seed
+  simulation: *seed
+
+layers:
+  # Every keyframe is [time, x, y]: the source holds that position until the next one.
+  # A keyframe made of the time alone, e.g. [1500], switches the source off, and a source does not exist
+  # before its first keyframe: [[100, 0, 0], [500]] makes it appear at time 100 and vanish at time 500.
+  # The resource sensed by a node is the sum of the two resource sources.
+
+  # Starts in (0, 0), moves to (10, 0) at resourceMoveTime.
+  - molecule: localResource
+    type: ScheduledGaussianLayer
+    parameters:
+      - *maxResource
+      - *gaussianShape
+      - [[0, -10, 0], [*resourceMoveTime, 10, 0]]
+
+  # Starts in (10, 0), vanishes at resource2OffTime, comes back in (10, 10) at resource2MoveTime.
+  - molecule: localResource2
+    type: ScheduledGaussianLayer
+    parameters:
+      - *maxResource
+      - *gaussianShape
+      - [[0, 20, 0], [*resource2OffTime], [*resource2MoveTime, 20, 30]]
+
+  # The only success source, fixed in (successX, successY).
+  - molecule: successSource
+    type: BidimensionalGaussianLayer
+    parameters: [*successX, *successY, *maxSuccess, *gaussianShape]
+
+  # The success sensed by a node is the sum of the two success sources, and this scenario has a single one.
+  - molecule: successSource2
+    type: ConstantLayer
+    parameters: [0.0]
+
+  # Any other layer can be given a lifetime by wrapping it in a TimedLayer, e.g.
+  #   - molecule: successSource
+  #     type: TimedLayer
+  #     parameters:
+  #       - { type: BidimensionalGaussianLayer, parameters: [*successX, *successY, *maxSuccess, *gaussianShape] }
+  #       - 100   # appears at time 100
+  #       - 500   # and disappears at time 500
+
+incarnation: collektive
+
+_pool: &program
+  - time-distribution: 1
+    type: Event
+    actions:
+      - type: RunCollektiveProgram
+        parameters: [it.unibo.collektive.vmc.VMCSpawningKt.withSpawning]
+
+deployments:
+  - type: Point
+    parameters: [ 0, 17]
+    programs:
+      - *program
+    properties:
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LayerProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.SuccessSensorProperty
+        parameters: [ *maxSuccess ]
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.LeaderSensorProperty
+        parameters: [ *leaderRadius ]
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.ResourceSensorProperty
+        parameters: [ *resourceLowerBound, *maxResource ]
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.DeviceSpawner
+        parameters: [ *cloningRange, *maxChildren, *minSpanWait ]

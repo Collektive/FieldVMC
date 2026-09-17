@@ -1,0 +1,137 @@
+[
+  {
+    "type": "class it.unibo.alchemist.boundary.gui.effects.DrawBidimensionalGaussianLayersGradient",
+    "samples": {
+      "max": 400,
+      "min": 10,
+      "val": 200
+    },
+    "minLayerValue": "0.1",
+    "maxLayerValue": "100000.0",
+    "minLayerValueCached": "0.1",
+    "maxLayerValueCached": "100000.0",
+    "minLayerValueDouble": 0.1,
+    "maxLayerValueDouble": 100000.0,
+    "mapper": {
+      "type": "class it.unibo.alchemist.boundary.gui.effects.AnyLayerToFunctionMapper"
+    },
+    "layerFilter": true,
+    "molString": "successSource",
+    "alpha": {
+      "max": 255,
+      "min": 0,
+      "val": 255
+    },
+    "red": {
+      "max": 255,
+      "min": 0,
+      "val": 255
+    },
+    "green": {
+      "max": 255,
+      "min": 0,
+      "val": 255
+    },
+    "blue": {
+      "max": 255,
+      "min": 0,
+      "val": 0
+    },
+    "colorCache": {
+      "value": -256
+    },
+    "markerNodeID": 0
+  },
+  {
+    "type": "class it.unibo.alchemist.boundary.gui.effects.DrawBidimensionalGaussianLayersGradient",
+    "samples": {
+      "max": 500,
+      "min": 10,
+      "val": 200
+    },
+    "minLayerValue": "0.1",
+    "maxLayerValue": "100000.0",
+    "minLayerValueCached": "0.1",
+    "maxLayerValueCached": "100000.0",
+    "minLayerValueDouble": 0.1,
+    "maxLayerValueDouble": 100000.0,
+    "mapper": {
+      "type": "class it.unibo.alchemist.boundary.gui.effects.AnyLayerToFunctionMapper"
+    },
+    "layerFilter": true,
+    "molString": "localResource",
+    "alpha": {
+      "max": 255,
+      "min": 0,
+      "val": 255
+    },
+    "red": {
+      "max": 255,
+      "min": 0,
+      "val": 0
+    },
+    "green": {
+      "max": 255,
+      "min": 0,
+      "val": 214
+    },
+    "blue": {
+      "max": 255,
+      "min": 0,
+      "val": 255
+    },
+    "colorCache": {
+      "value": -16722177
+    },
+    "markerNodeID": 0
+  },
+  {
+    "type": "class it.unibo.alchemist.boundary.gui.effects.DrawBidimensionalGaussianLayersGradient",
+    "samples": {
+      "max": 500,
+      "min": 10,
+      "val": 200
+    },
+    "minLayerValue": "0.1",
+    "maxLayerValue": "100000.0",
+    "minLayerValueCached": "0.1",
+    "maxLayerValueCached": "100000.0",
+    "minLayerValueDouble": 0.1,
+    "maxLayerValueDouble": 100000.0,
+    "mapper": {
+      "type": "class it.unibo.alchemist.boundary.gui.effects.AnyLayerToFunctionMapper"
+    },
+    "layerFilter": true,
+    "molString": "localResource2",
+    "alpha": {
+      "max": 255,
+      "min": 0,
+      "val": 255
+    },
+    "red": {
+      "max": 255,
+      "min": 0,
+      "val": 255
+    },
+    "green": {
+      "max": 255,
+      "min": 0,
+      "val": 0
+    },
+    "blue": {
+      "max": 255,
+      "min": 0,
+      "val": 255
+    },
+    "colorCache": {
+      "value": -65281
+    },
+    "markerNodeID": 0
+  },
+  {
+    "type": "class it.unibo.alchemist.boundary.gui.effects.DrawTree"
+  },
+  {
+    "type": "class it.unibo.alchemist.boundary.gui.effects.DrawTreeNodes"
+  }
+]
