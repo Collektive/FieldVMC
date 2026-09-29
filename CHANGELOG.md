@@ -1,3 +1,37 @@
+## [1.1.1](https://github.com/Collektive/FieldVMC/compare/1.1.0...1.1.1) (2026-09-29)
+
+### Dependency updates
+
+* **core-deps:** update dependency it.unibo.collektive.collektive-plugin to v28.3.3 ([#50](https://github.com/Collektive/FieldVMC/issues/50)) ([82c9be6](https://github.com/Collektive/FieldVMC/commit/82c9be6709e9bb91cf68f34668941819157588c0))
+* **deps:** update dependency com.github.ben-manes.caffeine:caffeine to v3.3.0 ([#45](https://github.com/Collektive/FieldVMC/issues/45)) ([9ef3485](https://github.com/Collektive/FieldVMC/commit/9ef3485693ed67b30383a994b8309fb61b7fe05a))
+* **deps:** update dependency pandas to v3.0.6 ([#44](https://github.com/Collektive/FieldVMC/issues/44)) ([1101c7b](https://github.com/Collektive/FieldVMC/commit/1101c7b513b03f141d7bc672c2749ab061341988))
+* **deps:** update gradle to v9.8.0 ([#47](https://github.com/Collektive/FieldVMC/issues/47)) ([18328ff](https://github.com/Collektive/FieldVMC/commit/18328ff64755639bbf9daa848185d1746b50bc68))
+* **deps:** update plugin kotlin-qa to v1.10.0 ([#48](https://github.com/Collektive/FieldVMC/issues/48)) ([69aecf2](https://github.com/Collektive/FieldVMC/commit/69aecf2a48e9be0158a8d17b3699943cc29541bc))
+* **deps:** update plugin kotlin-qa to v1.9.3 ([#46](https://github.com/Collektive/FieldVMC/issues/46)) ([a67b8d1](https://github.com/Collektive/FieldVMC/commit/a67b8d1f22502b6855e81b2fa972b602e723b010))
+
+### Build and continuous integration
+
+* **deps:** update danysk/build-check-deploy-gradle-action action to v4.0.47 ([#42](https://github.com/Collektive/FieldVMC/issues/42)) ([5c3ba48](https://github.com/Collektive/FieldVMC/commit/5c3ba48bed677bf620eee2fb2bacf75a9895798f))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v4.0.48 ([#49](https://github.com/Collektive/FieldVMC/issues/49)) ([5924564](https://github.com/Collektive/FieldVMC/commit/5924564591075123289a6f580a7ca20dfa8e6374))
+* **deps:** update dependency ubuntu to v26 ([#43](https://github.com/Collektive/FieldVMC/issues/43)) ([887ba42](https://github.com/Collektive/FieldVMC/commit/887ba42d1ba9e0723ce24b89a74cbd80472a18b6))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.1.0 [skip ci] ([fa98638](https://github.com/Collektive/FieldVMC/commit/fa98638d2415b2714f1e0abf54e5dd1acecded67))
+
+### Style improvements
+
+* **utils:** document and format the 2D vector contract ([a1b81f5](https://github.com/Collektive/FieldVMC/commit/a1b81f53bd1b7b56b2c057f819e067fec1e62104))
+
+### Refactoring
+
+* **cbf:** express the CBF as a signed safety margin ([52ddb33](https://github.com/Collektive/FieldVMC/commit/52ddb333fe360e5810ca294beeda8a648d4ec969))
+* **common:** tidy up the angular sector utilities ([260756b](https://github.com/Collektive/FieldVMC/commit/260756b43e3e719e27c212f2205e8dcf23268aca))
+* **lib:** name the spread parameter after the converged success ([35094c1](https://github.com/Collektive/FieldVMC/commit/35094c1b8b43d03718a10baae5f9f59a90dcfc28))
+* **NetworkMetrics:** simplify networkHub function for clarity ([b5711b2](https://github.com/Collektive/FieldVMC/commit/b5711b28410d078ab14453806b2c85ebef1e0784))
+* **spawning:** clarify the stability-free spawn policy ([5736760](https://github.com/Collektive/FieldVMC/commit/5736760ab1390ed65d9f4c7e7a719f8e4488f805))
+* **vmc:** rename the fixed-root entrypoint after what it does ([1227499](https://github.com/Collektive/FieldVMC/commit/1227499c0b6a96dd6e7b098853c2c5797771b93a))
+
 ## [1.1.0](https://github.com/Collektive/FieldVMC/compare/1.0.3...1.1.0) (2026-09-15)
 
 ### Features
