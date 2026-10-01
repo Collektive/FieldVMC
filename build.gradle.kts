@@ -28,7 +28,7 @@ sourceSets {
             implementation(libs.caffeine)
             implementation(libs.rrmxmx)
             implementation(libs.symmetric.matrix)
-            implementation("com.esotericsoftware:kryo:5.6.2")
+            implementation("com.esotericsoftware:kryo:5.7.0")
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.11.0")
         }
     }
