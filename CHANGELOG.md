@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/Collektive/FieldVMC/compare/1.1.1...1.1.2) (2026-10-01)
+
+### Dependency updates
+
+* **core-deps:** update dependency it.unibo.collektive.collektive-plugin to v28.3.4 ([#51](https://github.com/Collektive/FieldVMC/issues/51)) ([86c9310](https://github.com/Collektive/FieldVMC/commit/86c9310d07372d3b4f0e9e83490ced44d433fafc))
+* **deps:** update dependency com.esotericsoftware:kryo to v5.7.0 ([#52](https://github.com/Collektive/FieldVMC/issues/52)) ([c1568c0](https://github.com/Collektive/FieldVMC/commit/c1568c03af7fad3553d4ac77d2e4c7a6b5e27a46))
+
 ## [1.1.1](https://github.com/Collektive/FieldVMC/compare/1.1.0...1.1.1) (2026-09-29)
 
 ### Dependency updates
