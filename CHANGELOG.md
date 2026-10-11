@@ -1,3 +1,14 @@
+## [1.1.3](https://github.com/Collektive/FieldVMC/compare/1.1.2...1.1.3) (2026-10-11)
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlin.plugin.serialization to v2.4.21 ([#54](https://github.com/Collektive/FieldVMC/issues/54)) ([93d2361](https://github.com/Collektive/FieldVMC/commit/93d2361243cbadb4de32a9a14d8bd471007a4dcd))
+* **deps:** update dependency org.danilopianini:kotlin-symmetric-matrix to v2.0.3 ([#56](https://github.com/Collektive/FieldVMC/issues/56)) ([80d165f](https://github.com/Collektive/FieldVMC/commit/80d165fbbd894ee86d0ffadd39e59d8f54669a77))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.1.2 [skip ci] ([75f8621](https://github.com/Collektive/FieldVMC/commit/75f8621b5b41f7f072bca21cc44332552d56e42e))
+
 ## [1.1.2](https://github.com/Collektive/FieldVMC/compare/1.1.1...1.1.2) (2026-10-01)
 
 ### Dependency updates
