@@ -1,3 +1,16 @@
+## [1.1.5](https://github.com/Collektive/FieldVMC/compare/1.1.4...1.1.5) (2026-10-21)
+
+### Dependency updates
+
+* **core-deps:** update dependency org.jetbrains.kotlinx:kotlinx-serialization-core to v1.12.0 ([#70](https://github.com/Collektive/FieldVMC/issues/70)) ([cd00efd](https://github.com/Collektive/FieldVMC/commit/cd00efd7fc1fa82ab289def3ea3bd42e8cb82064))
+* **deps:** update gradle to v9.8.2 ([#69](https://github.com/Collektive/FieldVMC/issues/69)) ([aa15dcf](https://github.com/Collektive/FieldVMC/commit/aa15dcf11a5970056d415d8686a80c6a957db4df))
+* **deps:** update plugin gitsemver to v7.2.0 ([#71](https://github.com/Collektive/FieldVMC/issues/71)) ([e8ec602](https://github.com/Collektive/FieldVMC/commit/e8ec6024e658ecff8590578ddbd216c305c0ddfb))
+* **deps:** update plugin multijvmtesting to v4.5.11 ([#74](https://github.com/Collektive/FieldVMC/issues/74)) ([1407fd0](https://github.com/Collektive/FieldVMC/commit/1407fd0764851760384ff228b6ad1a5a4431dd8e))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.1.4 [skip ci] ([3d79eec](https://github.com/Collektive/FieldVMC/commit/3d79eecb4b060b4b362f331773e4f24adc1c8b1d))
+
 ## [1.1.4](https://github.com/Collektive/FieldVMC/compare/1.1.3...1.1.4) (2026-10-21)
 
 ### Dependency updates
