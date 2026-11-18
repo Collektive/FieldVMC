@@ -1,8 +1,8 @@
 package it.unibo.collektive.alchemist.device.sensors.impl
 
+import it.unibo.alchemist.model.Capability
 import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.model.Node
-import it.unibo.alchemist.model.NodeProperty
 import it.unibo.alchemist.model.Position
 import it.unibo.alchemist.model.molecules.SimpleMolecule
 import it.unibo.alchemist.model.times.DoubleTime
@@ -34,30 +34,27 @@ constructor(
     override val maxChildren: Int,
     override val minSpawnWait: Double = 20.0,
 ) : DeviceSpawn,
-    NodeProperty<T> {
-    override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> =
+    Capability<T> {
+    override fun cloneOnNewNode(node: Node<T>): Capability<T> =
         DeviceSpawner(randomGenerator, environment, node, cloningRange, maxChildren, minSpawnWait)
 
     @Suppress("UNCHECKED_CAST")
     override fun spawn(coordinate: CollektivePosition): Double {
-        val spawningTime =
-            environment.simulation.time + DoubleTime(randomGenerator.nextDouble(0.0.nextUp(), MAX_SPAWN_JITTER))
-        val cloneOfThis = node.cloneNode(spawningTime)
-        cloneOfThis.setConcentration(SimpleMolecule("leader"), false as T)
+        val jitter = DoubleTime(randomGenerator.nextDouble(0.0.nextUp(), MAX_SPAWN_JITTER))
+        val spawningTime = environment.simulation.currentTime + jitter
+        val cloneOfThis = node.cloneNode()
+        cloneOfThis[SimpleMolecule("leader")] = false as T
         val updatedPosition = environment.makePosition(coordinate.x, coordinate.y)
         environment.addNode(cloneOfThis, updatedPosition)
         return spawningTime.toDouble()
     }
 
+    // removeNode also disposes the node reactions and unschedules them.
     override fun selfDestroy() {
-        node.reactions.toList().forEach {
-            environment.simulation.reactionRemoved(it)
-            node.removeReaction(it)
-        }
         environment.simulation.schedule { environment.removeNode(node) }
     }
 
-    override fun currentTime(): Double = environment.simulation.time.toDouble()
+    override fun currentTime(): Double = environment.simulation.currentTime.toDouble()
 
     /**
      * Constants for the [DeviceSpawner] property.

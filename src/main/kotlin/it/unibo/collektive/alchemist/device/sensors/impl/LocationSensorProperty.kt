@@ -1,8 +1,8 @@
 package it.unibo.collektive.alchemist.device.sensors.impl
 
+import it.unibo.alchemist.model.Capability
 import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.model.Node
-import it.unibo.alchemist.model.NodeProperty
 import it.unibo.alchemist.model.Position
 import it.unibo.collektive.alchemist.device.sensors.LocationSensor
 import it.unibo.collektive.model.Position as CollektivePosition
@@ -20,11 +20,11 @@ class LocationSensorProperty<T : Any, P : Position<P>>(
     private val environment: Environment<T, P>,
     override val node: Node<T>,
 ) : LocationSensor,
-    NodeProperty<T> {
-    override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> = LocationSensorProperty(environment, node)
+    Capability<T> {
+    override fun cloneOnNewNode(node: Node<T>): Capability<T> = LocationSensorProperty(environment, node)
 
     override fun coordinates(): CollektivePosition {
-        val position = environment.getPosition(node).coordinates
+        val position = environment.currentPositionOf(node).coordinates
         return CollektivePosition(position[0], position[1])
     }
 }

@@ -31,7 +31,7 @@ constructor(
     }
 
     override fun invoke(environment: Environment<T, Position<*>>): Boolean {
-        val simulationTime = environment.simulation.time
+        val simulationTime = environment.simulation.currentTime
         val checkedInterval = simulationTime - lastChecked
         return when {
             checkedInterval >= timeIntervalToCheck -> {

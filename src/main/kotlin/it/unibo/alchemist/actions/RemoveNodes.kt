@@ -1,12 +1,11 @@
 package it.unibo.alchemist.actions
 
 import it.unibo.alchemist.model.Action
-import it.unibo.alchemist.model.Context
 import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.model.Node
 import it.unibo.alchemist.model.Position
 import it.unibo.alchemist.model.Reaction
-import it.unibo.alchemist.model.actions.AbstractAction
+import it.unibo.alchemist.model.actions.AbstractNodeAction
 
 /**
  * An Alchemist action that removes the specified [node] from the [environment] if its position
@@ -18,23 +17,22 @@ import it.unibo.alchemist.model.actions.AbstractAction
  */
 class RemoveNodes<T, P : Position<P>>(
     private val environment: Environment<T, P>,
-    private val node: Node<T>,
+    node: Node<T>,
+    reaction: Reaction<T>,
     private val killingRange: Double,
     private val origin: Double,
     private val width: Double,
     private val height: Double,
-) : AbstractAction<T>(node) {
-    override fun cloneAction(node: Node<T>, reaction: Reaction<T>): Action<T> =
-        RemoveNodes(environment, node, killingRange, origin, width, height)
+) : AbstractNodeAction<T>(reaction, node) {
+    override fun cloneTargeting(newReaction: Reaction<T>, newTarget: Node<T>): Action<T> =
+        RemoveNodes(environment, newTarget, newReaction, killingRange, origin, width, height)
 
     override fun execute() {
-        val nodePosition = environment.getPosition(node).coordinates
+        val nodePosition = environment.currentPositionOf(targetNode).coordinates
         val start = (width / 2) - (killingRange / 2) to origin
         val end = (width / 2) + (killingRange / 2) to height
         if (nodePosition[0] in start.first..end.first && nodePosition[1] in start.second..end.second) {
-            environment.removeNode(node)
+            environment.simulation.schedule { environment.removeNode(targetNode) }
         }
     }
-
-    override fun getContext(): Context = Context.NEIGHBORHOOD
 }

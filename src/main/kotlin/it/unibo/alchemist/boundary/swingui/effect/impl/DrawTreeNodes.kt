@@ -28,12 +28,12 @@ class DrawTreeNodes : AbstractTreeEffect() {
         wormhole: Wormhole2D<P>,
     ) {
         runCatching {
-            environment.getPosition(node)
+            environment.currentPositionOf(node)
         }.onSuccess { nodePosition ->
             val viewPoint = wormhole.getViewPoint(nodePosition)
-            val localResource = node.getConcentration(treeResource).toTreeDouble()
-            val localSuccess = node.getConcentration(treeSuccess).toTreeDouble()
-            val isLeader = node.getConcentration(treeLeader) == true
+            val localResource = node[treeResource].getOrNull().toTreeDouble()
+            val localSuccess = node[treeSuccess].getOrNull().toTreeDouble()
+            val isLeader = node[treeLeader].getOrNull() == true
 
             val size = calculateNodeSize(localResource, localSuccess)
             val sizeInScreenCoordinates = calculateScreenSize(size, nodePosition, environment, wormhole, viewPoint)

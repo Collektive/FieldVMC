@@ -1,9 +1,9 @@
 package it.unibo.alchemist.boundary.extractors
 
 import it.unibo.alchemist.boundary.ExportFilter
-import it.unibo.alchemist.model.Actionable
 import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.model.Node
+import it.unibo.alchemist.model.Reaction
 import it.unibo.alchemist.model.Time
 import it.unibo.alchemist.model.molecules.SimpleMolecule
 
@@ -30,18 +30,18 @@ constructor(
 
     override fun <T> getData(
         environment: Environment<T, *>,
-        reaction: Actionable<T>?,
+        reaction: Reaction<T>?,
         time: Time,
         step: Long,
-    ): Map<Node<T>, Double> = environment.nodes.associateWith { node ->
-        val neighbors = environment.getNeighborhood(node)
+    ): Map<Node<T>, Double> = environment.nodes.current.associateWith { node ->
+        val neighbors = environment.neighborhoodOf(node).current.neighbors
         if (checkChildren) {
             neighbors.count { neighbor ->
-                neighbor.getConcentration(SimpleMolecule("parent")) == node.id ||
-                    node.getConcentration(SimpleMolecule("parent")) == neighbor.id
+                neighbor[SimpleMolecule("parent")].getOrNull() == node.id ||
+                    node[SimpleMolecule("parent")].getOrNull() == neighbor.id
             }
         } else {
-            neighbors.size()
+            neighbors.size
         }.toDouble()
     }
 }

@@ -32,19 +32,19 @@ class DrawTree : AbstractTreeEffect() {
         environment: Environment<T, P>,
         wormhole: Wormhole2D<P>,
     ) {
-        val parentId = node.getConcentration(treeParent).toTreeInt()
-        val localResource = node.getConcentration(treeResource).toTreeDouble()
-        val localSuccess = node.getConcentration(treeSuccess).toTreeDouble()
+        val parentId = node[treeParent].getOrNull().toTreeInt()
+        val localResource = node[treeResource].getOrNull().toTreeDouble()
+        val localSuccess = node[treeSuccess].getOrNull().toTreeDouble()
         runCatching {
-            environment.getNeighborhood(node)
+            environment.neighborhoodOf(node).current.neighbors
         }.onSuccess { neighborhood ->
-            val localPosition = environment.getPosition(node)
+            val localPosition = environment.currentPositionOf(node)
             val viewPoint: Point = wormhole.getViewPoint(localPosition)
             val shifted: P = environment.makePosition(SHIFT_OFFSET, SHIFT_OFFSET) + localPosition.coordinates
             val shiftedViewPoint = wormhole.getViewPoint(shifted)
             val lineDistance = abs(shiftedViewPoint.x - viewPoint.x)
             for (neighbor in neighborhood) {
-                runCatching { environment.getPosition(neighbor) }.onSuccess { neighborPosition ->
+                runCatching { environment.currentPositionOf(neighbor) }.onSuccess { neighborPosition ->
                     val screenNeighborPosition = wormhole.getViewPoint(neighborPosition)
                     if (neighbor.id == parentId) {
                         val (midpoint1, midpoint2) = midpointShift(viewPoint, screenNeighborPosition, lineDistance)

@@ -20,7 +20,7 @@ class TerminationMetrics : (Environment<*, *>) -> Map<String, Double> {
      */
     override fun invoke(env: Environment<*, *>): Map<String, Double> = env.networkHub().let { (xCoord, yCoord) ->
         mapOf(
-            "nodes" to env.nodeCount.toDouble(),
+            "nodes" to env.nodeCount.current.toDouble(),
             "network-hub-xCoord" to xCoord,
             "network-hub-yCoord" to yCoord,
             "network-density" to env.networkDensity(),

@@ -23,8 +23,8 @@ object NetworkMetrics {
             val minY: Double = Double.Companion.POSITIVE_INFINITY,
             val maxY: Double = Double.Companion.NEGATIVE_INFINITY,
         )
-        val boundingBox = this.fold(BoundingBox()) { bb, node ->
-            val (x, y) = getPosition(node).coordinates
+        val boundingBox = nodes.current.fold(BoundingBox()) { bb, node ->
+            val (x, y) = currentPositionOf(node).coordinates
             BoundingBox(
                 min(x, bb.minX),
                 max(x, bb.maxX),
@@ -34,27 +34,27 @@ object NetworkMetrics {
         }
         val area = (boundingBox.maxX - boundingBox.minX) * (boundingBox.maxY - boundingBox.minY)
         if (area <= 0 || area.isInfinite()) return Double.Companion.NaN
-        return nodeCount / area
+        return nodeCount.current / area
     }
 
     /**
      * The degree of the nodes in the network.
      * The degree of a node is the number of neighbors it has.
      */
-    fun <T> Environment<T, *>.nodesDegree(): List<Double> = nodes
+    fun <T> Environment<T, *>.nodesDegree(): List<Double> = nodes.current
         .map { n ->
-            val neighbors = getNeighborhood(n)
-            neighbors.size().toDouble()
+            neighborhoodOf(n).current.neighbors.size.toDouble()
         }
 
     /**
      * The network hub coordinates.
      * The x and y coordinates are the average of the x and y coordinates of the nodes in the network.
      */
-    fun <T> Environment<T, *>.networkHub(): Pair<Double, Double> = fold(0.0 to 0.0) { accumulator, node ->
-        val (x, y) = getPosition(node).coordinates
-        accumulator.first + x to accumulator.second + y
-    }.let { (sumOfX, sumOfY) ->
-        sumOfX / nodeCount to sumOfY / nodeCount
-    }
+    fun <T> Environment<T, *>.networkHub(): Pair<Double, Double> = nodes.current
+        .fold(0.0 to 0.0) { accumulator, node ->
+            val (x, y) = currentPositionOf(node).coordinates
+            accumulator.first + x to accumulator.second + y
+        }.let { (sumOfX, sumOfY) ->
+            sumOfX / nodeCount.current to sumOfY / nodeCount.current
+        }
 }

@@ -2,9 +2,9 @@
 
 package it.unibo.collektive.alchemist.device.sensors.impl
 
+import it.unibo.alchemist.model.Capability
 import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.model.Node
-import it.unibo.alchemist.model.NodeProperty
 import it.unibo.alchemist.model.Position
 import it.unibo.alchemist.model.molecules.SimpleMolecule
 import it.unibo.collektive.alchemist.device.sensors.SuccessSensor
@@ -23,22 +23,25 @@ class SuccessSensorProperty<T, P : Position<P>>(
     override val node: Node<T>,
     private val environment: Environment<T, P>,
 ) : SuccessSensor,
-    NodeProperty<T> {
-    override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> = SuccessSensorProperty(maxSuccess, node, environment)
+    Capability<T> {
+    override fun cloneOnNewNode(node: Node<T>): Capability<T> = SuccessSensorProperty(maxSuccess, node, environment)
 
     @Suppress("UNCHECKED_CAST")
-    override fun setSuccess(success: Double) = node.setConcentration(SimpleMolecule("success"), success as T)
+    override fun setSuccess(success: Double) {
+        node[SimpleMolecule("success")] = success as T
+    }
 
     @Suppress("UNCHECKED_CAST")
-    override fun setLocalSuccess(localSuccess: Double) =
-        node.setConcentration(SimpleMolecule("local-success"), localSuccess as T)
+    override fun setLocalSuccess(localSuccess: Double) {
+        node[SimpleMolecule("local-success")] = localSuccess as T
+    }
 
-    override fun getSuccess(): Double = node.getConcentration(SimpleMolecule("success")) as Double
+    override fun getSuccess(): Double = node[SimpleMolecule("success")].getOrNull() as Double
 
     override fun getLocalSuccess(): Double = getFromLayer("successSource") // ?: random.nextDouble(0.0, maxSuccess)
 
     private fun <T> getFromLayer(name: String): T = (
-        environment.getLayer(SimpleMolecule(name))?.getValue(environment.getPosition(node))
+        environment.layerFor(SimpleMolecule(name))?.currentValueAt(environment.currentPositionOf(node))
             ?: IllegalStateException("Layer $name not found")
         ) as T
 

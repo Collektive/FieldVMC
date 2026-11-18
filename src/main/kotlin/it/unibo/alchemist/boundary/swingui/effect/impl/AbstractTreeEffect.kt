@@ -50,14 +50,14 @@ abstract class AbstractTreeEffect : Effect {
     )
 
     private fun <T : Any?, P : Position2D<P>> updateMaxValues(environment: Environment<T, P>) {
-        if (environment.simulation.time != lastUpdated) {
+        if (environment.simulation.currentTime != lastUpdated) {
             maxSuccess = 0.0
             maxResource = 0.0
-            for (node in environment.nodes) {
-                maxSuccess = max(maxSuccess, node.getConcentration(treeSuccess).toTreeDouble())
-                maxResource = max(maxResource, node.getConcentration(treeResource).toTreeDouble())
+            for (node in environment.nodes.current) {
+                maxSuccess = max(maxSuccess, node[treeSuccess].getOrNull().toTreeDouble())
+                maxResource = max(maxResource, node[treeResource].getOrNull().toTreeDouble())
             }
-            lastUpdated = environment.simulation.time
+            lastUpdated = environment.simulation.currentTime
         }
     }
 }

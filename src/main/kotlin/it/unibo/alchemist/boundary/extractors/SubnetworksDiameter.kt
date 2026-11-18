@@ -1,9 +1,9 @@
 package it.unibo.alchemist.boundary.extractors
 
 import it.unibo.alchemist.boundary.ExportFilter
-import it.unibo.alchemist.model.Actionable
 import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.model.Node
+import it.unibo.alchemist.model.Reaction
 import it.unibo.alchemist.model.Time
 import it.unibo.alchemist.model.molecules.SimpleMolecule
 import it.unibo.alchemist.util.Environments.allSubNetworksByNode
@@ -20,7 +20,7 @@ constructor(
 ) : AbstractAggregatingDoubleExtractor(filter, aggregators, precision) {
     private companion object {
         private const val NAME: String = "subnetworks-diameter"
-        private operator fun Node<*>.get(name: String) = getConcentration(SimpleMolecule(name))
+        private operator fun Node<*>.get(name: String): Any? = this[SimpleMolecule(name)].getOrNull()
         private val Node<*>.parent: Int
             get() = when (val parent = get("parent")) {
                 is Int -> parent
@@ -36,7 +36,7 @@ constructor(
 
     override fun <T> getData(
         environment: Environment<T, *>,
-        reaction: Actionable<T>?,
+        reaction: Reaction<T>?,
         time: Time,
         step: Long,
     ): Map<Node<T>, Double> = environment

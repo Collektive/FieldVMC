@@ -50,7 +50,7 @@ incarnation: collektive
 
 _pool: &program
   - time-distribution: 1
-    type: Event
+    type: GenericReaction
     actions:
       - type: RunCollektiveProgram
         parameters: [it.unibo.collektive.vmc.FieldVMCFixedLeaderKt.fixedRootWithSpawning]

@@ -25,9 +25,9 @@ class TakeTargetFromMolecule<T, P : Position<P>>(
     private val node: Node<T>,
 ) : TargetSelectionStrategy<T, P> {
 
-    override fun getTarget(): P? {
-        val currentPos = environment.getPosition(node)
-        val speed = node.getConcentration(SimpleMolecule("Velocity")) as? SpeedControl2D
+    override val target: P get() {
+        val currentPos = environment.currentPositionOf(node)
+        val speed = node[SimpleMolecule("Velocity")].getOrNull() as? SpeedControl2D
         return when {
             speed != null && (speed.x != 0.0 || speed.y != 0.0) -> {
                 environment.makePosition(

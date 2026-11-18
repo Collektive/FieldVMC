@@ -59,16 +59,14 @@ incarnation: collektive
 
 _pool: &program
   - time-distribution: 1
-    type: Event
+    type: GenericReaction
     actions:
       - type: RunCollektiveProgram
         parameters: [ it.unibo.collektive.vmc.VMCWithoutSpawningKt.withoutSpawning]
 
 _merging: &merging
-  - time-distribution:
-      type: Trigger
-      parameters: [ 200 ]
-    type: Event
+  - type: AbsoluteEvent
+    parameters: [ 200 ]
     actions:
       - type: MoveCluster
         parameters: [ *movingRange ]
