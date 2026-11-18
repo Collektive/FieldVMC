@@ -1,3 +1,50 @@
+## [1.1.6](https://github.com/Collektive/FieldVMC/compare/1.1.5...1.1.6) (2026-11-18)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v28.3.9 ([#101](https://github.com/Collektive/FieldVMC/issues/101)) ([e248692](https://github.com/Collektive/FieldVMC/commit/e248692e26d5225921751c2f11711f1249cc8492))
+* **core-deps:** update collektive to v29 ([#105](https://github.com/Collektive/FieldVMC/issues/105)) ([b9f54d2](https://github.com/Collektive/FieldVMC/commit/b9f54d29d435d616906b2bfc5e9566ace3a30a50))
+* **core-deps:** update dependency it.unibo.collektive.collektive-plugin to v28.3.8 ([#98](https://github.com/Collektive/FieldVMC/issues/98)) ([658a235](https://github.com/Collektive/FieldVMC/commit/658a2354f24195bbbf476f30cd3341d47c99548f))
+* **core-deps:** update dependency org.jetbrains.kotlinx:kotlinx-serialization-core to v1.13.0 ([#100](https://github.com/Collektive/FieldVMC/issues/100)) ([4503923](https://github.com/Collektive/FieldVMC/commit/450392350a0d3e3cc2277bb593ccf204bd5d0acd))
+* **deps:** set minimum java version to v21 to adapt to latest Alchemist version ([594eccf](https://github.com/Collektive/FieldVMC/commit/594eccf2aa46f771a9285edd016419ccd3ce2cfb))
+* **deps:** update alchemist to v48 ([#80](https://github.com/Collektive/FieldVMC/issues/80)) ([b56ca00](https://github.com/Collektive/FieldVMC/commit/b56ca00dafeac1675f0e9b58c28e5dfb7c69970e))
+* **deps:** update alchemist to v50 ([#87](https://github.com/Collektive/FieldVMC/issues/87)) ([32f4059](https://github.com/Collektive/FieldVMC/commit/32f405901bbd683e8f843b25469d156e425e8883))
+* **deps:** update alchemist to v50.0.1 ([#91](https://github.com/Collektive/FieldVMC/issues/91)) ([642aeb7](https://github.com/Collektive/FieldVMC/commit/642aeb7d2aeec4712c522604adf3c293fa902bd9))
+* **deps:** update alchemist to v50.0.2 ([#102](https://github.com/Collektive/FieldVMC/issues/102)) ([a1a434a](https://github.com/Collektive/FieldVMC/commit/a1a434a21552266579f6d9179c5bd95b1d3965bf))
+* **deps:** update alchemist to v50.0.3 ([#103](https://github.com/Collektive/FieldVMC/issues/103)) ([ec8ac96](https://github.com/Collektive/FieldVMC/commit/ec8ac9616bae22203dc75c194e8e92bf613c55f6))
+* **deps:** update alchemist to v50.0.4 ([#106](https://github.com/Collektive/FieldVMC/issues/106)) ([f0657c8](https://github.com/Collektive/FieldVMC/commit/f0657c8b05e6018c9bd18a4bb10abf320f9a266f))
+* **deps:** update dependency it.unibo.alchemist:alchemist to v43.1.40 ([#63](https://github.com/Collektive/FieldVMC/issues/63)) ([6b1bf4a](https://github.com/Collektive/FieldVMC/commit/6b1bf4aed541407d1b5d1c7d0c3c44d0176dad19))
+* **deps:** update dependency org.danilopianini:kotlin-symmetric-matrix to v2.0.4 ([#90](https://github.com/Collektive/FieldVMC/issues/90)) ([a270dc7](https://github.com/Collektive/FieldVMC/commit/a270dc74fdfd4e407e7f47ca01815633f53246e0))
+* **deps:** update dependency pandas to v3.1.0 ([#79](https://github.com/Collektive/FieldVMC/issues/79)) ([c38d7c2](https://github.com/Collektive/FieldVMC/commit/c38d7c2232da2ff5324172993fbb7be9a46df6d4))
+* **deps:** update dependency pandas to v3.1.1 ([#89](https://github.com/Collektive/FieldVMC/issues/89)) ([53178c5](https://github.com/Collektive/FieldVMC/commit/53178c574f3a264a6927b9dc6c95238cdeee37e1))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.158 ([#86](https://github.com/Collektive/FieldVMC/issues/86)) ([8a2c701](https://github.com/Collektive/FieldVMC/commit/8a2c701eb9eff43bb7d985179def2c1fd1ae4232))
+* **deps:** update eclipse-temurin docker tag to v26 ([#92](https://github.com/Collektive/FieldVMC/issues/92)) ([e65a6a6](https://github.com/Collektive/FieldVMC/commit/e65a6a6edf3cabf7e2e42482182ac6cb838c3fbe))
+* **deps:** update eclipse-temurin docker tag to v27 ([#93](https://github.com/Collektive/FieldVMC/issues/93)) ([85d5963](https://github.com/Collektive/FieldVMC/commit/85d5963e47c8ccb19b580739430e6ed7072a5cfa))
+* **deps:** update gradle to v9.9.0 ([#88](https://github.com/Collektive/FieldVMC/issues/88)) ([09ffee8](https://github.com/Collektive/FieldVMC/commit/09ffee84cdb5a1d7c0c7f90585a93e536afb3b7b))
+* **deps:** update gradle to v9.9.1 ([#99](https://github.com/Collektive/FieldVMC/issues/99)) ([16a8235](https://github.com/Collektive/FieldVMC/commit/16a82354b6cded7046c63eaa8790bc05c77718b8))
+* **deps:** update node.js to v26 ([#83](https://github.com/Collektive/FieldVMC/issues/83)) ([8f6d9cb](https://github.com/Collektive/FieldVMC/commit/8f6d9cbc82fd3ccea1dc09653b7ab9db0ac53d1d))
+* **deps:** update python docker tag to v3.15.1 ([#78](https://github.com/Collektive/FieldVMC/issues/78)) ([16ef262](https://github.com/Collektive/FieldVMC/commit/16ef262a12b3271587881cc6679df88db0b2058f))
+* **deps:** update python docker tag to v3.15.2 ([#84](https://github.com/Collektive/FieldVMC/issues/84)) ([6b1c9f6](https://github.com/Collektive/FieldVMC/commit/6b1c9f697c18cad7f86e94fce314e7d8adff600c))
+
+### Bug Fixes
+
+* adapt to new alchemist API ([1b9e55c](https://github.com/Collektive/FieldVMC/commit/1b9e55cfb7d2048d18da109efdda3ddbfd36f718))
+* **ci:** use latest macos runner in CI ([b01dcbc](https://github.com/Collektive/FieldVMC/commit/b01dcbc4f80d0f7434448a54c13aa11acefb3758))
+* use capabilities instead of properties in YAML specification ([c68d22e](https://github.com/Collektive/FieldVMC/commit/c68d22eb10ab82d7a8e6443aa2fc2ff3852a3140))
+* use common function to avoid code duplication ([af01ab1](https://github.com/Collektive/FieldVMC/commit/af01ab1069febf9f5bdc47719ab36893f39bbea6))
+
+### Build and continuous integration
+
+* **deps:** update danysk/build-check-deploy-gradle-action action to v4.0.50 ([#82](https://github.com/Collektive/FieldVMC/issues/82)) ([15afd91](https://github.com/Collektive/FieldVMC/commit/15afd9100afd1908b7c88e1f7fd20a4a84778a86))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v4.0.51 ([#85](https://github.com/Collektive/FieldVMC/issues/85)) ([8b936b7](https://github.com/Collektive/FieldVMC/commit/8b936b78e58a41951a31a394a26d5f86fba48eef))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v4.0.52 ([#104](https://github.com/Collektive/FieldVMC/issues/104)) ([01a07a5](https://github.com/Collektive/FieldVMC/commit/01a07a55672d7926ed35225792529e775874bdfc))
+* **deps:** update dependency ubuntu github actions runner to v26 ([#96](https://github.com/Collektive/FieldVMC/issues/96)) ([24a8449](https://github.com/Collektive/FieldVMC/commit/24a8449bc2e1d7b7b6f4952658e5c1abf9a1e34c))
+* **deps:** update dependency windows github actions runner to v2025 ([#97](https://github.com/Collektive/FieldVMC/issues/97)) ([d7cb705](https://github.com/Collektive/FieldVMC/commit/d7cb705a392a8279aceb4aa6f333a82cb3bd0924))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.1.5 [skip ci] ([fecdf3a](https://github.com/Collektive/FieldVMC/commit/fecdf3ab5efcb923c7be09cf67a2a7b09b1f3567))
+
 ## [1.1.5](https://github.com/Collektive/FieldVMC/compare/1.1.4...1.1.5) (2026-10-21)
 
 ### Dependency updates
