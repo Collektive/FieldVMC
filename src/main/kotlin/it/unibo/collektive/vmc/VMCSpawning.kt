@@ -4,7 +4,6 @@ package it.unibo.collektive.vmc
 
 import it.unibo.alchemist.collektive.device.CollektiveDevice
 import it.unibo.collektive.aggregate.api.Aggregate
-import it.unibo.collektive.aggregate.api.share
 import it.unibo.collektive.alchemist.device.properties.CBF
 import it.unibo.collektive.alchemist.device.sensors.DeviceSpawn
 import it.unibo.collektive.alchemist.device.sensors.LeaderSensor
@@ -18,8 +17,6 @@ import it.unibo.collektive.lib.isLeader
 import it.unibo.collektive.lib.obtainLocalSuccess
 import it.unibo.collektive.lib.spreadResource
 import it.unibo.collektive.utils.Spawner
-import it.unibo.collektive.utils.Stability
-import it.unibo.collektive.utils.determineStability
 
 /**
  * Entrypoint of the VMC algorithm, using spawning and destroying after stability policies.
@@ -58,33 +55,8 @@ context(
     successS: SuccessSensor,
     devSpawn: DeviceSpawn,
 )
-fun Aggregate<Int>.spawnAndDestroyAfterStability(): Double = vmc { potential, localSuccess, success, localResource ->
-    val (childrenCount, localPosition, neighborPositions) = extractNeighborhoodPositions(potential)
-    val now = devSpawn.currentTime()
-    share(Stability()) { neighborhoodStability ->
-        val lastChanged =
-            evolve(now to listOf(potential, localSuccess, success, localResource)) { last ->
-                val current = listOf(potential, localSuccess, success, localResource)
-                if (current == last.second) {
-                    last
-                } else {
-                    now to current
-                }
-            }.first
-        val localStability = neighborhoodStability.local.value
-        determineStability(
-            childrenCount,
-            localResource,
-            lastChanged,
-            now,
-            potential,
-            localPosition,
-            neighborPositions,
-            localStability,
-            CBF.unconstrained,
-        )
-    }
-}
+fun Aggregate<Int>.spawnAndDestroyAfterStability(): Double =
+    context(CBF.unconstrained) { spawnAndDestroyAfterStabilityWithBarriers() }
 
 /**
  * The VMC algorithm with the spawning and destroying of nodes.
