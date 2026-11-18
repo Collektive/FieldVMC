@@ -66,7 +66,7 @@ deployments:
     parameters: [ 0, 17]
     programs:
       - *program
-    properties:
+    capabilities:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.LayerProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty

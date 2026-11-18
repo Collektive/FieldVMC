@@ -63,7 +63,7 @@ deployments:
     contents:
       - molecule: leader
         concentration: true
-    properties:
+    capabilities:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.LayerProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty

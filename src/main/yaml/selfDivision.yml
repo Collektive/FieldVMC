@@ -80,7 +80,7 @@ deployments:
     programs:
       - *program
       - *divide
-    properties:
+    capabilities:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.LayerProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty
@@ -94,7 +94,7 @@ deployments:
     parameters: [*initialNodes, *width, 0, *width, *height]
     programs:
       - *program
-    properties:
+    capabilities:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.LayerProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.LocationSensorProperty
