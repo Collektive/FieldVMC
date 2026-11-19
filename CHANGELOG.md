@@ -1,3 +1,16 @@
+## [1.1.7](https://github.com/Collektive/FieldVMC/compare/1.1.6...1.1.7) (2026-11-19)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v30 ([#110](https://github.com/Collektive/FieldVMC/issues/110)) ([9d13b1a](https://github.com/Collektive/FieldVMC/commit/9d13b1ae043912189b51d33b318f061d43958ac6))
+* **deps:** update dependency org.danilopianini:rrmxmx-kt to v3 ([#107](https://github.com/Collektive/FieldVMC/issues/107)) ([e53e3ef](https://github.com/Collektive/FieldVMC/commit/e53e3eff2b75fe79f46ef0308a4be66a6d5423c3))
+* **deps:** update dependency org.danilopianini:rrmxmx-kt to v3.0.1 ([#108](https://github.com/Collektive/FieldVMC/issues/108)) ([f2dc93d](https://github.com/Collektive/FieldVMC/commit/f2dc93d775352f1a324322e4586b78994c0e9c7b))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.159 ([#109](https://github.com/Collektive/FieldVMC/issues/109)) ([2cd2536](https://github.com/Collektive/FieldVMC/commit/2cd25367a55540b871c3f9100c6f58effe03353f))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.1.6 [skip ci] ([06639d4](https://github.com/Collektive/FieldVMC/commit/06639d45ae629e337c062c639f56df3870fcb915))
+
 ## [1.1.6](https://github.com/Collektive/FieldVMC/compare/1.1.5...1.1.6) (2026-11-18)
 
 ### Dependency updates
