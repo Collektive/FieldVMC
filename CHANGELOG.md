@@ -1,3 +1,20 @@
+## [1.1.8](https://github.com/Collektive/FieldVMC/compare/1.1.7...1.1.8) (2026-11-27)
+
+### Dependency updates
+
+* **core-deps:** update dependency it.unibo.collektive.collektive-plugin to v30.0.1 ([#118](https://github.com/Collektive/FieldVMC/issues/118)) ([3e1ffc2](https://github.com/Collektive/FieldVMC/commit/3e1ffc21068b95ae5b002c512ddf297b5e475dfb))
+* **deps:** update alchemist to v50.0.5 ([#113](https://github.com/Collektive/FieldVMC/issues/113)) ([9196225](https://github.com/Collektive/FieldVMC/commit/919622523b669a44d9a0c0db28d1827fd157dd60))
+* **deps:** update alchemist to v50.0.6 ([#114](https://github.com/Collektive/FieldVMC/issues/114)) ([21c384b](https://github.com/Collektive/FieldVMC/commit/21c384b654f88de0f001b79103475f8004a40660))
+* **deps:** update alchemist to v50.0.7 ([#116](https://github.com/Collektive/FieldVMC/issues/116)) ([6bef67c](https://github.com/Collektive/FieldVMC/commit/6bef67cb68e63451ecdf3c3ce9240b13bc4aaaef))
+* **deps:** update alchemist to v50.0.8 ([72be45b](https://github.com/Collektive/FieldVMC/commit/72be45b2ba2f98cfc6da3f87cf437fd98c6fb34e))
+* **deps:** update dependency org.danilopianini:rrmxmx-kt to v3.0.2 ([#111](https://github.com/Collektive/FieldVMC/issues/111)) ([1c9fc1c](https://github.com/Collektive/FieldVMC/commit/1c9fc1caad980b33de18a05ee7173b92ee640580))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.160 ([#115](https://github.com/Collektive/FieldVMC/issues/115)) ([10a139a](https://github.com/Collektive/FieldVMC/commit/10a139a411828691f14aad9ce70a5a40dd81630d))
+* **deps:** update gradle to v9.9.2 ([#112](https://github.com/Collektive/FieldVMC/issues/112)) ([a501126](https://github.com/Collektive/FieldVMC/commit/a501126f041a262ffc3102803fa461cb3dac3dca))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.1.7 [skip ci] ([8d599fc](https://github.com/Collektive/FieldVMC/commit/8d599fcb859b0925e062bc8e6c7e5df619473ded))
+
 ## [1.1.7](https://github.com/Collektive/FieldVMC/compare/1.1.6...1.1.7) (2026-11-19)
 
 ### Dependency updates
